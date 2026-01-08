@@ -1,0 +1,598 @@
+/* =========================================================
+   COMPONENTS – UI COMPARTIDA
+   Depende de: theme.css + base.css
+   ========================================================= */
+
+/* =========================================================
+   1) LAYOUT SHELL (cabecera + menú + zona apps)
+   ========================================================= */
+
+#contenedor-general{
+  height: 100vh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* grid: menú + app */
+#contenedor-principal{
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: 6px;
+  overflow: hidden;
+}
+
+/* zona apps con scroll interno */
+#zona-aplicaciones{
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-4);
+  background: var(--bg-menus);
+  border: var(--border-1);
+  box-shadow: var(--shadow-2);
+}
+
+/* =========================================================
+   2) CABECERA (nuevo + compat legacy)
+   ========================================================= */
+
+/* Nuevo header (cabecera.php) */
+.app-header{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-menus);
+  border-bottom: var(--border-1);
+  box-shadow: var(--shadow-1);
+  z-index: 50;
+}
+
+.app-header__left{
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.app-header__title{
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.app-header__brand{
+  font-weight: 800;
+  letter-spacing: .4px;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.app-header__subtitle{
+  font-size: .82rem;
+  color: var(--text-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-header__right{
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Compat con tu cabecera antigua si aparece */
+#cabecera-principal{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 var(--space-4);
+  background: var(--bg-panel);
+  border-bottom: var(--border-1);
+  box-shadow: var(--shadow-1);
+  z-index: 50;
+}
+
+#cabecera-principal .titulo{
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Icon button */
+.icon-btn{
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: var(--border-1);
+  background: var(--bg-panel-soft);
+  color: var(--text-main);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-1);
+  transition: background .12s ease, border-color .12s ease, transform .12s ease;
+}
+
+.icon-btn:hover{
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   3) MENÚ IZQUIERDO (nuevo + compat legacy)
+   ========================================================= */
+
+.app-menu{
+  min-height: 0;
+  overflow: hidden;
+  background: var(--bg-menus);
+  border: var(--border-1);
+  box-shadow: var(--shadow-2);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Compat ID si algún HTML lo usa */
+#menu-izquierdo{
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* nav scrolleable */
+.app-menu__nav{
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* links */
+.app-menu__item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  color: var(--text-main);
+  text-decoration: none;
+  border: 1px solid transparent;
+  background: transparent;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.app-menu__item i{
+  width: 22px;
+  text-align: center;
+  opacity: .92;
+  flex: 0 0 auto;
+}
+
+.app-menu__item span{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.app-menu__item:hover{
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.app-menu__item.is-active{
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* Compat menú antiguo UL/LI si existiera */
+#menu-izquierdo ul{ list-style: none; padding: 0; margin: 0; }
+#menu-izquierdo li a{
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  color: var(--text-soft);
+  transition: background .15s ease, color .15s ease;
+  text-decoration: none;
+}
+#menu-izquierdo li a:hover{
+  background: var(--bg-panel-soft);
+  color: var(--text-main);
+}
+#menu-izquierdo li.activo a{
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Footer fijo (estado del sistema) */
+.app-menu__footer{
+  flex: 0 0 auto;
+  padding: 0 var(--space-3) var(--space-3);
+}
+
+.app-menu__status{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(148,163,184,0.08);
+  border: 1px solid rgba(148,163,184,0.18);
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: .88rem;
+}
+
+.status-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  box-shadow: 0 0 0 2px rgba(0,0,0,.25) inset, 0 10px 18px rgba(0,0,0,.25);
+}
+.status-dot--ok{
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(0,0,0,.25) inset, 0 0 16px rgba(34,197,94,.45);
+}
+
+.status-text--compact{ display: none; }
+
+/* =========================================================
+   4) MODOS DE MENÚ (expandido / compacto / oculto)
+   ========================================================= */
+
+/* Expandido (default): nada extra */
+
+/* Compacto: menú estrecho + iconos grandes + centrado */
+body.menu-compacto #contenedor-principal{
+  grid-template-columns: 78px minmax(0, 1fr) !important;
+}
+
+/* Mantén el aside realmente estrecho (evita “tarjetas anchas” dentro) */
+body.menu-compacto .app-menu{
+  width: 70px;
+}
+
+body.menu-compacto .app-menu__nav{
+  padding: 10px 8px;
+}
+
+/* items en forma “botón cuadrado” */
+body.menu-compacto .app-menu__item{
+  width: 100%;
+  height: 48px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 14px;
+}
+
+body.menu-compacto .app-menu__item span{
+  display: none;
+}
+
+body.menu-compacto .app-menu__item i{
+  width: auto;
+  font-size: 1.35rem; /* iconos más grandes */
+}
+
+/* Footer compacto */
+body.menu-compacto .app-menu__footer{
+  padding: 0 8px 12px;
+}
+
+body.menu-compacto .app-menu__status{
+  width: 100%;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+body.menu-compacto .status-text--full{ display: none; }
+body.menu-compacto .status-text--compact{ display: inline; }
+
+/* Compat: si algún JS usa menu-colapsado, lo tratamos como compacto */
+body.menu-colapsado #contenedor-principal{
+  grid-template-columns: 60px minmax(0, 1fr) !important;
+}
+body.menu-colapsado .app-menu__item span{ display:none; }
+body.menu-colapsado .app-menu__item{ justify-content:center; padding:0; }
+
+/* Oculto: sin menú */
+body.menu-oculto #contenedor-principal{
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+body.menu-oculto #menu-izquierdo{
+  display: none;
+}
+
+/* =========================================================
+   5) SEPARADOR GLOBAL (una sola definición)
+   ========================================================= */
+
+.menu-separador{
+  height: 1px;
+  width: 100%;
+  background: var(--separator);
+  margin: 10px 0;
+  border-radius: 999px;
+}
+
+/* =========================================================
+   5.1) ESTRUCTURA BASE DE CADA APP (dentro de #zona-aplicaciones)
+   - Úsalo añadiendo class="app-page" al contenedor raíz de cada app
+   ========================================================= */
+
+.app-page{
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.app-filters{
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--bg-panel-soft);
+  border: var(--border-1);
+  box-shadow: var(--shadow-1);
+}
+
+.field{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+  min-height: 0;
+}
+
+.field label{
+  font-size: .85rem;
+  color: var(--text-soft);
+}
+
+.field :is(input,select,textarea){
+  width: 100%;
+  min-width: 0;
+}
+
+/* =========================================================
+   6) PANELES / CARDS
+   ========================================================= */
+
+.panel,
+.card,
+:where(
+  .plano-panel,
+  .grafica-panel,
+  .graficas-lateral,
+  .documentos-columna,
+  .informes-panel,
+  .alertas-panel
+){
+  background: var(--bg-panel);
+  border: var(--border-1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.panel-header{
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+}
+
+.panel-body{
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* =========================================================
+   7) BOTONES
+   ========================================================= */
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: var(--border-1);
+  background: var(--bg-panel-soft);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, transform .12s ease;
+}
+
+.btn:hover{
+background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  transform: translateY(-1px);
+}
+
+.btn-primary{
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn-danger{
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+
+.btn--sm{
+  height: 40px;
+  padding: 0 .9rem;
+  border-radius: 12px;
+  font-size: .85rem;
+}
+
+/* =========================================================
+   8) FORMS (inputs/selects/labels) – GLOBAL
+   ========================================================= */
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+  min-width: 180px;
+  min-height: 0;
+}
+
+.label,
+.field > label{
+  font-size: .85rem;
+  color: var(--text-soft);
+}
+
+/* Base de control: se aplica por clase y también por defecto a inputs */
+.control,
+:where(input, select, textarea){
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  color: var(--text-main);
+  background: var(--input-bg, var(--bg-panel-soft));
+  border: var(--border-1);
+  border-radius: var(--radius-sm);
+  padding: .55rem .75rem;
+  box-shadow: var(--shadow-1);
+  outline: none;
+}
+
+/* Focus coherente con theme */
+.control:focus,
+:where(input, select, textarea):focus{
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: var(--focus);
+}
+
+/* Placeholder */
+:where(input, textarea)::placeholder{
+  color: color-mix(in srgb, var(--text-soft) 75%, transparent);
+}
+
+/* Tamaños */
+.control--sm{ padding: .45rem .6rem; font-size: .85rem; }
+.control--lg{ padding: .7rem .9rem; font-size: .95rem; }
+
+/* Disabled */
+.control:disabled,
+:where(input, select, textarea):disabled{
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   9) TABLAS COMUNES
+   ========================================================= */
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead{
+  position: sticky;
+  top: 0;
+  background: var(--bg-panel);
+  z-index: 1;
+}
+
+th, td{
+  padding: 8px 10px;
+  border-bottom: var(--border-1);
+}
+
+tbody tr:nth-child(even){
+  background: var(--row-alt);
+}
+
+/* =========================================================
+   10) SCROLLBARS
+   ========================================================= */
+
+*::-webkit-scrollbar{
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+
+body.tema-claro *::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,0.25);
+}
+body.tema-claro #zona-aplicaciones{
+  background: #f5f6f8;
+}
+
+/* =========================================================
+   11) RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 980px){
+  #contenedor-principal{
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app-menu{
+    display: none; /* menú móvil si quieres luego lo hacemos */
+  }
+}
+/* Modo iconos: bola de estado más grande */
+body.menu-compacto .status-dot{
+  width: 14px;
+  height: 14px;
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,.25) inset,
+    0 0 18px rgba(34,197,94,.55);
+}
+
+.menu-group { margin-top: 6px; }
+.menu-group__items { display: none; padding-left: 10px; }
+.menu-group.is-open .menu-group__items { display: block; }
+
+.menu-item--sub {
+  opacity: .9;
+  font-size: .92em;
+  margin-left: 6px;
+}
+
+.menu-group__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-item__chevron { opacity: .7; }
+.menu-group.is-open .menu-item__chevron { transform: rotate(180deg); }

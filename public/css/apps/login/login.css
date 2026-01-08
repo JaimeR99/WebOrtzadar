@@ -1,0 +1,115 @@
+/* public/css/apps/login/login.css */
+
+.login-body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-app);
+  color: var(--text-main);
+}
+
+.login-wrap {
+  width: min(420px, 92vw);
+  padding: var(--space-4);
+}
+
+.login-card {
+  border-radius: var(--radius-lg);
+  background: var(--bg-panel);
+  border: var(--border-1);
+  box-shadow: var(--shadow-3);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.login-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.login-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #0b1220;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-title {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: .4px;
+}
+
+.login-subtitle {
+  margin: 2px 0 0;
+  font-size: .85rem;
+  color: var(--text-soft);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+}
+
+.login-label {
+  font-size: .82rem;
+  color: var(--text-soft);
+}
+
+.login-input {
+  height: 42px;
+  border-radius: 12px;
+  border: var(--border-1);
+  background: var(--bg-panel-soft);
+  color: var(--text-main);
+  padding: 0 .85rem;
+  outline: none;
+}
+
+.login-input:focus {
+  border-color: var(--accent);
+  box-shadow: var(--focus-ring);
+
+}
+
+.login-btn {
+  margin-top: var(--space-2);
+  height: 44px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #111827;
+  font-weight: 800;
+  box-shadow: var(--shadow-2);
+}
+
+.login-btn:hover {
+  transform: translateY(-1px);
+}
+
+.login-error {
+  border-radius: 12px;
+  padding: .6rem .8rem;
+  border: 1px solid rgba(239, 68, 68, .4);
+  background: rgba(239, 68, 68, .12);
+  color: #fecaca;
+  font-size: .85rem;
+}
+
+.login-foot {
+  font-size: .8rem;
+  color: var(--text-soft);
+  text-align: center;
+}

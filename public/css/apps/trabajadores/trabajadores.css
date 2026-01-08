@@ -1,0 +1,307 @@
+/* =========================================================
+   Trabajadores sociales
+   - Reusa tokens y componentes shared
+   ========================================================= */
+
+.app--trabajadores .trabajadores-actions{ display:flex; gap: var(--space-2); }
+
+.app--trabajadores .trabajadores-panel{ padding: var(--space-4); }
+
+.app--trabajadores .trabajadores-toolbar{
+  display:flex;
+  gap: var(--space-3);
+  align-items:end;
+  flex-wrap:wrap;
+  margin-bottom: var(--space-3);
+}
+
+.app--trabajadores .trabajadores-toolbar .field{ min-width: 220px; }
+
+.app--trabajadores .trabajadores-status{
+  padding: var(--space-2) var(--space-1);
+  color: var(--text-soft);
+}
+
+.app--trabajadores .trabajadores-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-3);
+}
+
+.app--trabajadores .trabajador-card{
+  border: 1px solid rgba(148,163,184,0.18);
+  border-radius: var(--radius-3);
+  background: rgba(148,163,184,0.06);
+  padding: var(--space-3);
+  cursor:pointer;
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+}
+
+.app--trabajadores .trabajador-card:hover{
+  transform: translateY(-1px);
+  border-color: rgba(148,163,184,0.28);
+  background: rgba(148,163,184,0.08);
+}
+
+.app--trabajadores .trabajador-card__top{ display:flex; align-items:center; gap: var(--space-3); }
+
+.app--trabajadores .trabajador-avatar{
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display:grid;
+  place-items:center;
+  font-weight: 900;
+  color: var(--text-main);
+  background: rgba(148,163,184,0.10);
+  border: 1px solid rgba(148,163,184,0.22);
+  flex: 0 0 auto;
+}
+
+.app--trabajadores .trabajador-name{ font-weight: 900; letter-spacing: .2px; }
+.app--trabajadores .trabajador-sub{ color: var(--text-soft); font-size: .92rem; margin-top: 2px; }
+
+.app--trabajadores .trabajador-meta{ margin-top: var(--space-2); display:flex; flex-direction:column; gap: 6px; }
+.app--trabajadores .trabajador-meta .meta-row{ display:flex; gap: 8px; align-items:center; color: var(--text-soft); font-size: .92rem; }
+.app--trabajadores .trabajador-meta i{ width: 16px; opacity: .85; }
+
+.app--trabajadores .trabajador-badges{ margin-top: var(--space-2); display:flex; gap: 8px; flex-wrap:wrap; }
+.app--trabajadores .badge{
+  display:inline-flex;
+  align-items:center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 700;
+  border: 1px solid rgba(148,163,184,0.18);
+  background: rgba(148,163,184,0.08);
+}
+
+.app--trabajadores .badge--ok{ border-color: rgba(34,197,94,.30); background: rgba(34,197,94,.10); }
+.app--trabajadores .badge--warn{ border-color: rgba(245,158,11,.30); background: rgba(245,158,11,.10); }
+
+.io-modal[data-program="trabajadores"] .trabajadores-acceso-actions{
+  margin-top: var(--space-3);
+  display:flex;
+  gap: var(--space-2);
+  flex-wrap:wrap;
+}
+
+.io-modal[data-program="trabajadores"] .trabajadores-modal .io-section + .io-section{ margin-top: var(--space-4); }
+
+.trabajadores-modal{
+  overflow: auto;
+}
+.app--trabajadores .trabajadores-empty{
+  text-align:center;
+  padding: var(--space-5) var(--space-3);
+  color: var(--text-soft);
+}
+
+.app--trabajadores .trabajadores-empty__title{ margin:0; color: var(--text-main); font-weight: 900; }
+.app--trabajadores .trabajadores-empty__text{ margin: 6px 0 0; }
+.trabajador-avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  position:relative;
+  flex-shrink:0;
+  background: linear-gradient(135deg, #334155, #0f172a);
+}
+
+.trabajador-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.trabajador-avatar .trabajador-initials{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  color:#e5e7eb;
+  letter-spacing:.5px;
+}
+
+/* por defecto: no foto */
+.trabajador-avatar.is-no-photo img{ display:none; }
+.trabajador-avatar.is-no-photo .trabajador-initials{ display:grid; }
+
+/* con foto */
+.trabajador-avatar.has-photo img{ display:block; }
+.trabajador-avatar.has-photo .trabajador-initials{ display:none; }
+
+/* modal grande */
+.trabajador-avatar.lg{ width:96px; height:96px; }
+/* Modal > Datos trabajador: 2 columnas */
+.io-modal[data-program="trabajadores"] .trabajadores-datos-grid{
+  display:grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-4);
+  align-items:start;
+}
+
+.io-modal[data-program="trabajadores"] .trabajadores-datos-col{
+  display:grid;
+  gap: var(--space-3);
+}
+
+@media (max-width: 720px){
+  .io-modal[data-program="trabajadores"] .trabajadores-datos-grid{
+    grid-template-columns: 1fr;
+  }
+}
+.io-modal[data-program="trabajadores"] .trabajadores-acceso-panel{
+  display:grid;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.io-modal[data-program="trabajadores"] .trabajadores-acceso-panel.is-hidden{
+  display:none;
+}
+/* =========================================================
+   Switch (toggle) – estilo IO compartido
+   Uso:
+   <label class="io-switch">
+     <input type="checkbox">
+     <span class="io-switch__track"></span>
+     <span class="io-switch__thumb"></span>
+   </label>
+   ========================================================= */
+
+.io-switch{
+  --sw-w: 42px;
+  --sw-h: 22px;
+  --sw-pad: 2px;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.io-switch input{
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Track */
+.io-switch__track{
+  width: var(--sw-w);
+  height: var(--sw-h);
+  border-radius: 999px;
+  background: rgba(148,163,184,.35);
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,.25);
+  transition: background .18s ease, box-shadow .18s ease;
+}
+
+/* Thumb */
+.io-switch__thumb{
+  position: absolute;
+  left: var(--sw-pad);
+  top: 50%;
+  width: calc(var(--sw-h) - (var(--sw-pad) * 2));
+  height: calc(var(--sw-h) - (var(--sw-pad) * 2));
+  border-radius: 999px;
+  background: #fff;
+  transform: translateY(-50%);
+  box-shadow: 0 1px 3px rgba(15,23,42,.35);
+  transition: left .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+/* Checked */
+.io-switch input:checked + .io-switch__track{
+  background: var(--accent);
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,.15);
+}
+
+.io-switch input:checked ~ .io-switch__thumb{
+  left: calc(var(--sw-w) - var(--sw-h) + var(--sw-pad));
+}
+
+/* Focus (teclado) */
+.io-switch input:focus-visible + .io-switch__track{
+  box-shadow:
+    inset 0 0 0 1px rgba(15,23,42,.25),
+    0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+/* Disabled */
+.io-switch input:disabled + .io-switch__track{
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.io-switch input:disabled ~ .io-switch__thumb{
+  opacity: .6;
+}
+/* Formación continua */
+.io-modal[data-program="trabajadores"] .trab-form-grid{
+  display:grid;
+  grid-template-columns: 1fr 220px;
+  gap: var(--space-3);
+  align-items:end;
+}
+
+.io-modal[data-program="trabajadores"] .trab-form-actions{
+  grid-column: 1 / -1;
+  display:flex;
+  justify-content:flex-end;
+  margin-top: var(--space-2);
+}
+
+.io-modal[data-program="trabajadores"] .trab-form-list{
+  margin-top: var(--space-3);
+  display:grid;
+  gap: var(--space-2);
+}
+
+.io-modal[data-program="trabajadores"] .trab-form-item{
+  border: 1px solid rgba(148,163,184,0.18);
+  background: rgba(148,163,184,0.06);
+  border-radius: var(--radius-3);
+  padding: var(--space-2) var(--space-3);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: var(--space-3);
+}
+
+.io-modal[data-program="trabajadores"] .trab-form-item__meta{
+  display:flex;
+  flex-direction:column;
+  gap: 2px;
+}
+
+.io-modal[data-program="trabajadores"] .trab-form-item__title{
+  font-weight: 800;
+}
+
+.io-modal[data-program="trabajadores"] .trab-form-item__sub{
+  color: var(--text-soft);
+  font-size: .9rem;
+}
+
+@media (max-width: 720px){
+  .io-modal[data-program="trabajadores"] .trab-form-grid{
+    grid-template-columns: 1fr;
+  }
+  .io-modal[data-program="trabajadores"] .trab-form-actions{
+    justify-content:stretch;
+  }
+}
+.trab-tabpanels{
+  height: 100%;
+    overflow: auto;
+}

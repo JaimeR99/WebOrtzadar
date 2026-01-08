@@ -1,0 +1,766 @@
+/* =========================================================
+   Programas > Vivienda (CSS mínimo)
+   - Listado principal estándar (como IO)
+   - Modal Vivienda: Datos + Participantes + Dinámicas + Alimentación + Equipamientos + Revisiones
+   - NO redefine inputs/colores/base: eso viene de shared
+   ========================================================= */
+
+/* =========================
+   LISTADO PRINCIPAL (estándar IO)
+   ========================= */
+
+.app.vivienda{
+  height: 100%;
+  min-height: 0;
+  display:flex;
+  flex-direction:column;
+}
+
+.app.vivienda .app__header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  flex: 0 0 auto;
+}
+
+.app.vivienda .app__title{
+  margin:0;
+  font-size: 1.35rem;
+  font-weight: 950;
+  letter-spacing: .2px;
+  color: var(--text-main);
+}
+
+.app.vivienda .app__subtitle{
+  margin: 4px 0 0;
+  font-size: .92rem;
+  color: var(--text-soft);
+  opacity: .9;
+}
+
+.app.vivienda .list#viviendaList{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y:auto;
+  padding-right: 4px;
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  margin-top: var(--space-2);
+}
+
+.app.vivienda .empty{
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px dashed rgba(148,163,184,0.22);
+  color: var(--text-soft);
+  background: rgba(148,163,184,0.06);
+}
+
+/* fila */
+.app.vivienda .io-person{
+  display:grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 14px;
+  align-items:center;
+
+  padding: 14px;
+  border-radius: 14px;
+
+  background: color-mix(in srgb, var(--bg-panel) 96%, #000 4%);
+  border: 1px solid rgba(148,163,184,0.14);
+  box-shadow: 0 4px 12px rgba(0,0,0,.22);
+
+  cursor:pointer;
+  position:relative;
+  transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease, background .12s ease;
+}
+
+.app.vivienda .io-person::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:10px;
+  bottom:10px;
+  width:3px;
+  border-radius:999px;
+  background:transparent;
+  opacity:.95;
+}
+
+.app.vivienda .io-person:hover{
+  transform: translateY(-1px);
+  border-color: rgba(148,163,184,0.26);
+  box-shadow: 0 10px 24px rgba(0,0,0,.34);
+  background: color-mix(in srgb, var(--bg-panel) 98%, #fff 2%);
+}
+
+.app.vivienda .io-person:hover::before{
+  background: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+/* 🔧 FIX: quitar “focus naranja redondeado” */
+.app.vivienda .io-person:focus-within{
+  box-shadow: 0 10px 24px rgba(0,0,0,.30);
+  border-color: rgba(148,163,184,0.26);
+}
+
+/* la fila entera clicable */
+.app.vivienda .io-person__actions{ display:none !important; }
+
+.app.vivienda .io-avatar{
+  width:72px;
+  height:72px;
+  border-radius:16px;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background: rgba(148,163,184,0.08);
+  border: 1px solid rgba(148,163,184,0.18);
+}
+
+.app.vivienda .io-avatar__img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.app.vivienda .io-person__main{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+
+.app.vivienda .io-person__title{
+  font-weight: 950;
+  font-size: 1.05rem;
+  letter-spacing: .2px;
+  line-height: 1.15;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.app.vivienda .io-person__meta{
+  display:grid;
+  grid-template-columns: max-content max-content 1fr;
+  gap: 10px 14px;
+  align-items:center;
+  min-width:0;
+}
+
+.app.vivienda .io-person__meta > span{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  font-size:.86rem;
+  color: color-mix(in srgb, var(--text-soft) 92%, #fff 8%);
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.app.vivienda .io-person__meta > span.io-muted{
+  justify-self:end;
+  opacity:.72;
+  font-variant-numeric: tabular-nums;
+}
+
+.app.vivienda .io-person__footer{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 6px 14px;
+  font-size:.86rem;
+  color: color-mix(in srgb, var(--text-soft) 92%, #fff 8%);
+}
+
+.app.vivienda .io-muted{ color: var(--text-soft); opacity:.92; }
+
+/* iconos (mismo truco que IO) */
+.app.vivienda .io-person__meta > span::before{
+  content:"";
+  width:14px; height:14px; flex:0 0 14px;
+  opacity:.75;
+  background: currentColor;
+  mask-repeat:no-repeat; mask-position:center; mask-size:contain;
+  -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain;
+}
+
+/* doc */
+.app.vivienda .io-person__meta > span:nth-child(1)::before{
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 5a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V5zm3-1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H7zm1.5 4h7a1 1 0 1 1 0 2h-7a1 1 0 1 1 0-2zm0 4h4a1 1 0 1 1 0 2h-4a1 1 0 1 1 0-2z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 5a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V5zm3-1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H7zm1.5 4h7a1 1 0 1 1 0 2h-7a1 1 0 1 1 0-2zm0 4h4a1 1 0 1 1 0 2h-4a1 1 0 1 1 0-2z'/%3E%3C/svg%3E");
+}
+/* email */
+.app.vivienda .io-person__meta > span:nth-child(2)::before{
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6zm3-1a1 1 0 0 0-1 1v.5l6 4.2 6-4.2V6a1 1 0 0 0-1-1H7zm11 4.1-5.4 3.78a1 1 0 0 1-1.2 0L6 9.1V18a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9.1z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6zm3-1a1 1 0 0 0-1 1v.5l6 4.2 6-4.2V6a1 1 0 0 0-1-1H7zm11 4.1-5.4 3.78a1 1 0 0 1-1.2 0L6 9.1V18a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9.1z'/%3E%3C/svg%3E");
+}
+/* calendario */
+.app.vivienda .io-person__meta > span:nth-child(3)::before{
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1zm12 8H5v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9zM6 6a1 1 0 0 0-1 1v1h14V7a1 1 0 0 0-1-1H6z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1zm12 8H5v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9zM6 6a1 1 0 0 0-1 1v1h14V7a1 1 0 0 0-1-1H6z'/%3E%3C/svg%3E");
+}
+
+@media (max-width: 980px){
+  .app.vivienda .io-person__meta{ grid-template-columns: 1fr 1fr; }
+  .app.vivienda .io-person__meta > span.io-muted{
+    grid-column: 1 / -1;
+    justify-self:start;
+  }
+}
+@media (max-width: 640px){
+  .app.vivienda .io-person{ grid-template-columns: 72px minmax(0, 1fr); }
+}
+
+/* =========================
+   MODAL > DATOS (VIVIENDA)
+   ========================= */
+
+.io-modal[data-program="vivienda"] #tab_viv_datos .io-section__body.viv-datos-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+  display:grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 18px 22px;
+}
+
+.io-modal[data-program="vivienda"] .viv-datos-foto{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+
+.io-modal[data-program="vivienda"] #vivAvatar.viv-house-avatar{
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  overflow:hidden;
+  cursor:pointer;
+  border: 1px solid rgba(148,163,184,0.18);
+  background: rgba(148,163,184,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,.22);
+  position:relative;
+  display:block;
+}
+
+.io-modal[data-program="vivienda"] #vivAvatar.viv-house-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.io-modal[data-program="vivienda"] #vivAvatar.viv-house-avatar.is-no-photo img{ display:none; }
+.io-modal[data-program="vivienda"] #vivAvatar.viv-house-avatar .ocio-avatar__fallback{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  color:#fff;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), rgba(0,0,0,.45));
+}
+
+.io-modal[data-program="vivienda"] .viv-datos-fields{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+}
+
+
+/* avatar pequeño (vale si es .io-avatar o .ocio-avatar) */
+.io-modal[data-program="vivienda"] :is(#vivRespAvatar,#vivIntAvatar){
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  overflow:hidden;
+  border: 1px solid rgba(148,163,184,0.18);
+  background: rgba(148,163,184,0.08);
+  flex: 0 0 auto;
+  position: relative;
+  margin-top: 22px; /* 🔧 FIX: baja el avatar a la altura del select */
+}
+
+.io-modal[data-program="vivienda"] :is(#vivRespAvatar,#vivIntAvatar) img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.io-modal[data-program="vivienda"] :is(#vivRespAvatar,#vivIntAvatar).is-no-photo img{ display:none; }
+.io-modal[data-program="vivienda"] :is(#vivRespAvatar,#vivIntAvatar) .ocio-avatar__fallback{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  font-weight: 900;
+  color: var(--text-main);
+  opacity:.9;
+}
+
+/* cards fechas */
+.io-modal[data-program="vivienda"] .viv-datos-meta{
+  grid-column: 1 / -1;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.io-modal[data-program="vivienda"] .viv-meta-item{
+  border: 1px solid rgba(148,163,184,0.14);
+  border-radius: 14px;
+  background: rgba(148,163,184,0.06);
+  padding: 10px 12px;
+}
+
+.io-modal[data-program="vivienda"] .viv-meta-k{
+  color: var(--text-soft);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.io-modal[data-program="vivienda"] .viv-meta-v{
+  color: var(--text-main);
+  font-weight: 800;
+}
+
+@media (max-width: 860px){
+  .io-modal[data-program="vivienda"] #tab_viv_datos .io-section__body.viv-datos-wrap{
+    grid-template-columns: 1fr;
+  }
+  .io-modal[data-program="vivienda"] .viv-datos-foto{ max-width: 420px; }
+  .io-modal[data-program="vivienda"] .viv-datos-fields{ grid-template-columns: 1fr; }
+  .io-modal[data-program="vivienda"] .viv-datos-meta{ grid-template-columns: 1fr; }
+  .io-modal[data-program="vivienda"] :is(#vivRespAvatar,#vivIntAvatar){ margin-top: 18px; }
+}
+
+/* =========================
+   MODAL > PARTICIPANTES
+   ========================= */
+
+/* resultados del buscador inline */
+#viv_part_resultados{
+  margin-top: 10px;
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+
+.viv-res-tile{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(148,163,184,0.16);
+  background: rgba(148,163,184,0.06);
+}
+
+.viv-res-tile__name{
+  font-weight: 950;
+  color: var(--text-main);
+}
+
+.viv-res-tile__sub{
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.viv-res-tile__right{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content:flex-end;
+}
+
+.viv-badge{
+  font-size: 12px;
+  color: var(--text-soft);
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.16);
+  background: rgba(148,163,184,0.06);
+  white-space: nowrap;
+}
+
+.viv-badge--ok{
+  border-color: color-mix(in srgb, var(--accent) 28%, rgba(148,163,184,0.16));
+  background: color-mix(in srgb, var(--accent) 10%, rgba(148,163,184,0.06));
+  color: color-mix(in srgb, var(--accent) 55%, var(--text-soft));
+}
+
+/* grid de participantes asociados (las tarjetas pequeñas) */
+#viv_participantes_grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* Participantes: mismo look que Ocio (sin botón X a la derecha) */
+#viv_participantes_grid .io-person{
+  cursor: default;
+}
+#viv_participantes_grid .io-person::before{
+  display:none;
+}
+#viv_participantes_grid .io-avatar{
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+}
+
+
+/* tarjeta participante (reusa estilo tipo “trabajador”) */
+.trabajador-card{
+  display:flex;
+  gap: 10px;
+  align-items:center;
+  border: 1px solid rgba(148,163,184,0.16);
+  border-radius: 14px;
+  background: rgba(148,163,184,0.06);
+  padding: 10px;
+}
+
+.trabajador-avatar{
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  overflow:hidden;
+  border: 1px solid rgba(148,163,184,0.16);
+  background: rgba(148,163,184,0.10);
+  display:grid;
+  place-items:center;
+}
+.trabajador-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+.trabajador-info{ flex:1; min-width:0; }
+.trabajador-nombre{
+  font-weight: 900;
+  color: var(--text-main);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.trabajador-sub{
+  margin-top:2px;
+  color: var(--text-soft);
+  font-size: 12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* =========================
+   MINI MODALES (genéricos vivienda)
+   ========================= */
+
+.viv-mini{ display:none; position:fixed; inset:0; z-index:10050; }
+.viv-mini.is-open{ display:block; }
+
+.viv-mini__overlay{ position:absolute; inset:0; background: rgba(2,6,23,.55); backdrop-filter: blur(4px); }
+
+.viv-mini__card{
+  position:relative;
+  width: min(720px, calc(100% - 24px));
+  margin: 70px auto;
+  border-radius: 16px;
+  background: var(--bg-panel);
+  border: 1px solid rgba(148,163,184,0.16);
+  box-shadow: 0 18px 60px rgba(0,0,0,.55);
+  overflow:hidden;
+}
+
+.viv-mini__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(148,163,184,0.14);
+}
+.viv-mini__title{ font-weight: 950; color: var(--text-main); }
+
+.viv-mini__body{ padding: 12px 14px 14px; }
+
+.viv-mini__results{
+  margin-top: 12px;
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+
+.viv-mini__res-item{
+  display:flex;
+  justify-content:space-between;
+  gap: 12px;
+  text-align:left;
+  width:100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(148,163,184,0.16);
+  background: rgba(148,163,184,0.06);
+  cursor:pointer;
+}
+
+.viv-mini__res-left{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  min-width: 0;
+}
+.viv-mini__res-left > div:last-child{
+  min-width: 0;
+}
+
+.viv-mini__res-item:hover{
+  border-color: rgba(148,163,184,0.30);
+  background: rgba(148,163,184,0.08);
+}
+
+.viv-mini__res-name{ font-weight: 900; color: var(--text-main); }
+.viv-mini__res-sub{ color: var(--text-soft); font-size: 12px; }
+
+.viv-mini__actions{
+  display:flex;
+  justify-content:flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.viv-mini__badge{
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.18);
+  background: rgba(148,163,184,0.06);
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+.viv-mini__res-item.is-warn{
+  border-color: rgba(245,158,11,0.35);
+  background: rgba(245,158,11,0.06);
+}
+
+/* =========================
+   EQUIPAMIENTOS
+   ========================= */
+
+.viv-eq-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.viv-eq-item{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(148,163,184,0.16);
+  background: rgba(148,163,184,0.06);
+}
+
+/* =========================
+   REVISIONES
+   ========================= */
+
+.viv-rev{ margin-top: 16px; }
+
+.viv-rev__head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+}
+
+.viv-rev__table{
+  margin-top: 10px;
+  border: 1px solid rgba(148,163,184,0.14);
+  border-radius: 14px;
+  overflow:hidden;
+}
+
+.viv-rev__row{
+  display:grid;
+  grid-template-columns: 140px 110px 110px 80px 1fr;
+  gap: 8px;
+  padding: 8px 12px;
+  align-items:start;
+  border-top: 1px solid rgba(148,163,184,0.10);
+}
+.viv-rev__row--head{
+  font-weight: 600;
+  border-top:none;
+  background: rgba(148,163,184,0.06);
+}
+.viv-rev__obs{
+  white-space: pre-wrap;
+  line-height: 1.25;
+  color: var(--text-main);
+}
+
+/* =========================
+   DINÁMICAS (histórico)
+   ========================= */
+
+.viv-dyn-list{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.viv-dyn-item{
+  border: 1px solid rgba(148,163,184,0.16);
+  border-radius: 14px;
+  background: rgba(148,163,184,0.06);
+  padding: 10px 12px;
+}
+
+.viv-dyn-item__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.viv-dyn-item__date{ color: var(--text-soft); font-size: 12px; }
+.viv-dyn-item__comment{ white-space: pre-wrap; color: var(--text-main); line-height: 1.35; }
+
+.viv-stars{ display:flex; gap:6px; align-items:center; }
+.viv-star{
+  border: 1px solid rgba(148,163,184,0.18);
+  background: rgba(148,163,184,0.06);
+  border-radius: 10px;
+  padding: 6px 10px;
+  cursor:pointer;
+  line-height: 1;
+  font-size: 18px;
+  color: rgba(148,163,184,0.55);
+}
+.viv-star.is-on{ color: var(--accent); }
+
+/* =========================
+   ALIMENTACIÓN (menú/incidencias)
+   ========================= */
+
+.viv-list{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.viv-item{
+  border: 1px solid rgba(148,163,184,0.16);
+  border-radius: 14px;
+  background: rgba(148,163,184,0.06);
+  padding: 10px 12px;
+}
+
+.viv-item__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.viv-item__date,
+.viv-item__meta{
+  color: var(--text-soft);
+  font-size: 12px;
+}
+
+.viv-item__body{
+  white-space: pre-wrap;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+.viv-menu-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.viv-menu-grid > div{
+  border: 1px solid rgba(148,163,184,0.12);
+  background: rgba(148,163,184,0.04);
+  border-radius: 12px;
+  padding: 8px 10px;
+  color: var(--text-main);
+  white-space: pre-wrap;
+}
+
+.viv-menu-grid > div > span{
+  display:inline-block;
+  min-width: 16px;
+  font-weight: 950;
+  color: var(--text-soft);
+  margin-right: 6px;
+}
+
+/* =========================================================
+   FIX MODAL VIVIENDA > DATOS
+   - Foto vivienda ocupa todo el alto
+   - Avatares responsable/integrador al lado del select
+   ========================================================= */
+
+/* 1) El grid estira columnas (la foto puede ocupar el alto del panel derecho) */
+.io-modal[data-program="vivienda"] #tab_viv_datos .io-section__body.viv-datos-wrap{
+  align-items: stretch;
+}
+
+/* 2) La columna de foto también se estira */
+.io-modal[data-program="vivienda"] .viv-datos-foto{
+  align-self: stretch;
+}
+
+/* 3) Forzamos altura del avatar de vivienda (pisamos el height:72px de .app.vivienda .io-avatar) */
+.io-modal[data-program="vivienda"] #vivAvatar.viv-house-avatar{
+  height: 100%;
+  min-height: 260px;
+  aspect-ratio: auto; /* importante: evita que se quede en "tira" */
+}
+
+/* 4) Responsable / Integrador: fila horizontal (avatar + campo) */
+.io-modal[data-program="vivienda"] .viv-datos-fields .viv-person-row{
+  display: flex;
+  gap: 10px;
+  align-items: flex-end; /* alinea el avatar con el input/select */
+}
+
+/* 5) El campo ocupa el resto */
+.io-modal[data-program="vivienda"] .viv-datos-fields .viv-person-row .field{
+  flex: 1;
+  min-width: 0;
+}
+
+/* 6) Quitamos el margin-top que intentaba bajar el avatar (ya no hace falta) */
+.io-modal[data-program="vivienda"] :is(#vivRespAvatar,#vivIntAvatar){
+  margin-top: 0 !important;
+}
+
+/* Responsive: en móvil volvemos a un ratio bonito */
+@media (max-width: 860px){
+  .io-modal[data-program="vivienda"] #vivAvatar.viv-house-avatar{
+    height: auto;
+    min-height: unset;
+    aspect-ratio: 16 / 12;
+  }
+}

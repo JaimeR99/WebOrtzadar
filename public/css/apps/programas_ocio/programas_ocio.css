@@ -1,0 +1,1079 @@
+/* =========================================================
+   PROGRAMA: OCIO
+   CSS DEPURADO / UNIFICADO (OFFICE + COMPACT)
+   - Página Ocio: header + filtros + lista
+   - Modal Ocio (#programModal_ocio): top + tabs + subtabs + scroll
+   - Ocio > Datos: layout 1/3 foto + 2/3 datos (3 filas)
+   - Ocio > Participantes: resultados + seleccionados (X en hover)
+   - Ocio > Acta: asistencia (check visible) + incidencias + histórico
+   ========================================================= */
+
+
+/* =========================================================
+   1) PÁGINA OCIO: HEADER + FILTROS + LISTA
+   ========================================================= */
+
+.app.ocio{
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.app.ocio .app__header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  flex: 0 0 auto;
+}
+
+.app.ocio .app__title{
+  margin:0;
+  font-size: 1.35rem;
+  font-weight: 950;
+  letter-spacing: .2px;
+  color: var(--text-main);
+}
+
+.app.ocio .app__subtitle{
+  margin: 4px 0 0;
+  font-size: .92rem;
+  color: var(--text-soft);
+  opacity: .9;
+}
+
+/* Filtros */
+.app.ocio .panel.filters{
+  flex: 0 0 auto;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--bg-panel) 92%, #000 8%);
+  border: 1px solid rgba(148,163,184,0.14);
+  box-shadow: 0 6px 16px rgba(0,0,0,.22);
+}
+
+.app.ocio .filters__row{
+  display:grid;
+  grid-template-columns: 1.2fr 1.2fr auto;
+  gap: 12px;
+  align-items:end;
+}
+
+.app.ocio .filters__row .field{ min-width: 0; }
+
+.app.ocio .filters__row .field label{
+  font-size: .82rem;
+  color: var(--text-soft);
+}
+
+.app.ocio .filters__actions{
+  display:flex;
+  gap: 10px;
+  justify-content:flex-end;
+  align-items:center;
+  padding-bottom: 1px;
+}
+
+/* Lista: ocupa resto y scroll */
+.app.ocio #ocioList.list__grid{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-top: var(--space-3);
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+
+/* Card de grupo */
+.app.ocio .ocio-grupo{
+  display:grid;
+  grid-template-columns: 76px minmax(0,1fr);
+  gap: 14px;
+  align-items:center;
+
+  padding: 14px;
+  border-radius: 14px;
+
+  background: color-mix(in srgb, var(--bg-panel) 96%, #000 4%);
+  border: 1px solid rgba(148,163,184,0.14);
+  box-shadow: 0 4px 12px rgba(0,0,0,.22);
+
+  cursor: pointer;
+  position: relative;
+  transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease, background .12s ease;
+}
+
+/* barra lateral sutil */
+.app.ocio .ocio-grupo::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:10px;
+  bottom:10px;
+  width: 3px;
+  border-radius: 999px;
+  background: transparent;
+  opacity: .95;
+}
+
+.app.ocio .ocio-grupo:hover{
+  transform: translateY(-1px);
+  border-color: rgba(148,163,184,0.26);
+  box-shadow: 0 10px 24px rgba(0,0,0,.34);
+  background: color-mix(in srgb, var(--bg-panel) 98%, #fff 2%);
+}
+
+.app.ocio .ocio-grupo:hover::before{
+  background: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.app.ocio .ocio-grupo:focus-within{
+  box-shadow: var(--focus), 0 10px 24px rgba(0,0,0,.30);
+  border-color: color-mix(in srgb, var(--accent) 35%, rgba(148,163,184,0.22));
+}
+
+/* Botón abrir no hace falta (fila entera clicable) */
+.app.ocio .ocio-grupo__actions{ display:none !important; }
+
+/* Avatar grupo (lista) */
+.app.ocio .ocio-avatar{
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background: rgba(148,163,184,0.08);
+  border: 1px solid rgba(148,163,184,0.18);
+  position: relative;
+}
+
+.app.ocio .ocio-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+
+.app.ocio .ocio-avatar__fallback{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  color: var(--text-main);
+}
+
+/* Main */
+.app.ocio .ocio-grupo__main{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+
+.app.ocio .ocio-grupo__title{
+  font-weight: 950;
+  font-size: 1.05rem;
+  letter-spacing: .2px;
+  line-height: 1.15;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.app.ocio .ocio-grupo__meta{
+  display:flex;
+  gap: 14px;
+  flex-wrap:wrap;
+}
+
+.app.ocio .ocio-grupo__meta .io-muted{
+  font-size: .86rem;
+  color: color-mix(in srgb, var(--text-soft) 92%, #fff 8%);
+  opacity: .9;
+}
+
+/* Tema claro (lista) */
+body.tema-claro .app.ocio .panel.filters{
+  background: #fff;
+  border-color: rgba(15,23,42,.12);
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+body.tema-claro .app.ocio .ocio-grupo{
+  background:#fff;
+  border-color: rgba(15,23,42,.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+body.tema-claro .app.ocio .ocio-grupo:hover{
+  box-shadow: 0 4px 10px rgba(0,0,0,.12);
+}
+
+/* Responsive página */
+@media (max-width: 980px){
+  .app.ocio .filters__row{ grid-template-columns: 1fr; }
+  .app.ocio .filters__actions{ justify-content:flex-end; }
+}
+
+
+/* =========================================================
+   2) MODAL OCIO — BASE (OFFICE + COMPACT)  [#programModal_ocio]
+   ========================================================= */
+
+#programModal_ocio{
+  --oc-pad: 12px;
+  --oc-gap: 12px;
+  --oc-radius: 14px;
+  --oc-input-h: 36px;
+  --oc-font: 13.5px;
+
+  --oc-border: rgba(15,23,42,.10);
+  --oc-soft: rgba(2,6,23,.03);
+  --oc-text: rgba(15,23,42,.92);
+  --oc-muted: rgba(51,65,85,.78);
+}
+
+body:not(.tema-claro) #programModal_ocio{
+  --oc-border: rgba(148,163,184,.16);
+  --oc-soft: rgba(148,163,184,.06);
+  --oc-text: rgba(248,250,252,.92);
+  --oc-muted: rgba(226,232,240,.76);
+  font-size: var(--oc-font);
+}
+
+/* Dialog */
+#programModal_ocio .io-modal__dialog{ overflow:hidden; }
+
+/* TOP */
+#programModal_ocio .io-modal__top{
+  padding: 12px var(--oc-pad);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+  border-bottom: 1px solid var(--oc-border);
+  box-shadow: none;
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--bg-panel) 90%, #000 10%),
+    var(--bg-panel)
+  );
+}
+
+body.tema-claro #programModal_ocio .io-modal__top{
+  background: linear-gradient(180deg, #ffffff, #f6f7f9);
+  border-bottom: 1px solid rgba(15,23,42,0.10);
+}
+
+#programModal_ocio .io-modal__top-left{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  min-width:0;
+}
+
+#programModal_ocio #programModal_ocio_avatar.io-avatar{
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display:grid;
+  place-items:center;
+  background: rgba(148,163,184,0.08);
+  border: 1px solid rgba(148,163,184,0.22);
+  font-weight: 950;
+  letter-spacing: .3px;
+}
+
+body.tema-claro #programModal_ocio #programModal_ocio_avatar.io-avatar{
+  background: #f3f4f6;
+  border-color: rgba(15,23,42,0.12);
+}
+
+#programModal_ocio .io-modal__name{
+  font-size: 1.02rem;
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: .2px;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color: var(--oc-text);
+}
+
+#programModal_ocio .io-modal__sub{
+  margin-top: 6px;
+  font-size: .82rem;
+  color: var(--oc-muted);
+  opacity: 1;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+
+  display:inline-flex;
+  align-items:center;
+  gap: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(148,163,184,0.06);
+  border: 1px solid color-mix(in srgb, var(--oc-border) 70%, transparent);
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* Cerrar */
+#programModal_ocio .io-icon-btn{
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--oc-border) 85%, transparent);
+  background: rgba(148,163,184,0.06);
+  color: var(--oc-text);
+}
+
+/* Tabs principales */
+#programModal_ocio .io-modal__tabs{
+  padding: 0 var(--oc-pad);
+  gap: 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--oc-border) 70%, transparent);
+}
+
+#programModal_ocio .io-modal__tabs .io-tab{
+  position: relative;
+  padding: 10px 2px 11px;
+  font-weight: 850;
+  font-size: .88rem;
+  letter-spacing: .2px;
+  opacity: .88;
+  background: transparent;
+  border: 0;
+}
+
+#programModal_ocio .io-modal__tabs .io-tab:hover{ opacity: 1; }
+#programModal_ocio .io-modal__tabs .io-tab.is-active{ opacity: 1; color: var(--oc-text); }
+
+#programModal_ocio .io-modal__tabs .io-tab.is-active::after{
+  height: 3px;
+  bottom: -1px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 75%, #fff 25%);
+}
+
+/* Subtabs bar (no scroll) */
+#programModal_ocio .ocio-subtabsbar{
+  padding: 0;
+  background: linear-gradient(180deg, var(--oc-soft), transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--oc-border) 65%, transparent);
+}
+
+#programModal_ocio .ocio-subtabsbar .io-subtabs{
+  padding: 8px var(--oc-pad);
+  margin: 0;
+  gap: 14px;
+}
+
+#programModal_ocio .ocio-subtabsbar .io-tab{
+  position: relative;
+  padding: 8px 2px 9px;
+  font-size: .84rem;
+  font-weight: 800;
+  opacity: .82;
+  background: transparent;
+  border: 0;
+}
+
+#programModal_ocio .ocio-subtabsbar .io-tab:hover{ opacity: .95; }
+#programModal_ocio .ocio-subtabsbar .io-tab.is-active{ opacity: 1; }
+
+#programModal_ocio .ocio-subtabsbar .io-tab.is-active::after{
+  height: 2px;
+  background: color-mix(in srgb, var(--accent) 65%, transparent);
+  border-radius: 999px;
+}
+
+/* Acciones acta: sólo visible cuando el tab acta esté activo (añade clase en JS si quieres) */
+#programModal_ocio .ocio-subtabs-actions{
+  padding: 0 var(--oc-pad) 10px;
+  display:flex;
+  gap: 10px;
+  justify-content:flex-end;
+  align-items:center;
+}
+#programModal_ocio .ocio-subtabsbar:not(.is-acta) .ocio-subtabs-actions{ display:none; }
+
+/* Scroll */
+#programModal_ocio .io-modal__scroll{
+  padding: var(--oc-pad);
+}
+
+/* Footer compacto */
+#programModal_ocio .io-modal__footer .btn{
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  font-size: .88rem;
+}
+
+
+/* =========================================================
+   3) MODAL OCIO — SECCIONES / FORM BASE
+   ========================================================= */
+
+#programModal_ocio .io-section{
+  border-radius: var(--oc-radius);
+  border: 1px solid var(--oc-border);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 8px 22px rgba(15,23,42,.06);
+  overflow: hidden;
+}
+
+body:not(.tema-claro) #programModal_ocio .io-section{
+  background: color-mix(in srgb, var(--bg-panel) 92%, #000 8%);
+  box-shadow: 0 10px 26px rgba(0,0,0,.26);
+}
+
+#programModal_ocio .io-section__head{
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--oc-border) 70%, transparent);
+  background: linear-gradient(180deg, var(--oc-soft), transparent);
+}
+
+#programModal_ocio .io-section__body{ padding: 12px 14px 14px; }
+
+#programModal_ocio .io-section__title{
+  font-weight: 950;
+  letter-spacing: .2px;
+  color: var(--oc-text);
+}
+
+#programModal_ocio .io-section__sub{
+  font-size: .88rem;
+  color: var(--oc-muted);
+}
+
+#programModal_ocio .io-form-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 14px;
+}
+
+#programModal_ocio .io-row{
+  display:flex;
+  flex-direction:column;
+  gap: 4px;
+}
+
+#programModal_ocio .io-row--full{ grid-column: 1 / -1; }
+
+#programModal_ocio .io-label{
+  font-size: .78rem;
+  font-weight: 750;
+  letter-spacing: .12px;
+  color: var(--oc-muted);
+  opacity: 1;
+}
+
+#programModal_ocio :is(.io-input,.io-select,.io-textarea){
+  border-radius: 12px;
+  border: 1px solid var(--oc-border);
+  background: var(--oc-soft);
+  box-shadow: none;
+  color: var(--oc-text);
+}
+
+#programModal_ocio :is(.io-input,.io-select){
+  height: var(--oc-input-h);
+  font-size: .88rem;
+}
+
+#programModal_ocio .io-textarea,
+#programModal_ocio textarea.io-input{
+  min-height: 96px;
+  resize: vertical;
+  font-size: .88rem;
+}
+
+#programModal_ocio :is(.io-input,.io-select,.io-textarea):focus{
+  outline: none;
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--oc-border));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  #programModal_ocio .io-form-grid{ grid-template-columns: 1fr; }
+}
+
+
+/* =========================================================
+   4) OCIO > DATOS (1/3 FOTO + 2/3 DATOS EN 3 FILAS)
+   - Target: #tab_ocio_datos
+   ========================================================= */
+
+#programModal_ocio #tab_ocio_datos .io-section__body{
+  /* forzamos layout 2 columnas usando el orden real de hijos:
+     1) .io-row (avatar)
+     2) .io-form-grid (campos) */
+  display:grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
+  gap: 14px 18px;
+  align-items:start;
+}
+
+/* Colocación explícita */
+#programModal_ocio #tab_ocio_datos .io-section__body > .io-row{
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+}
+#programModal_ocio #tab_ocio_datos .io-section__body > .io-form-grid{
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* En la columna derecha: 3 filas (Nombre, Fecha, Responsable) */
+#programModal_ocio #tab_ocio_datos .io-section__body > .io-form-grid{
+  grid-template-columns: 1fr; /* apila */
+}
+
+/* Avatar grande de grupo */
+#programModal_ocio #tab_ocio_datos #ocioGroupAvatar.ocio-avatar{
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  border-radius: var(--oc-radius);
+  overflow:hidden;
+  border: 1px solid var(--oc-border);
+  background: var(--oc-soft);
+  display:grid;
+  place-items:center;
+  cursor: pointer;
+  position: relative;
+}
+
+#programModal_ocio #tab_ocio_datos #ocioGroupAvatar.ocio-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  transition: transform .2s ease;
+}
+
+/* Hover “editar” sobre foto grupo */
+#programModal_ocio #tab_ocio_datos #ocioGroupAvatar.ocio-avatar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(2,6,23,.35);
+  opacity: 0;
+  transition: opacity .15s ease;
+  pointer-events:none;
+}
+#programModal_ocio #tab_ocio_datos #ocioGroupAvatar.ocio-avatar::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%) scale(.96);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity .15s ease, transform .15s ease;
+  pointer-events:none;
+
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm2.92 2.83H5v-.92l8.06-8.06.92.92L5.92 20.08zM20.71 7.04a1 1 0 0 0 0-1.41L18.37 3.29a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/%3E%3C/svg%3E") center/20px 20px no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm2.92 2.83H5v-.92l8.06-8.06.92.92L5.92 20.08zM20.71 7.04a1 1 0 0 0 0-1.41L18.37 3.29a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/%3E%3C/svg%3E") center/20px 20px no-repeat;
+
+  background-color: rgba(15,23,42,.88);
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow: 0 10px 22px rgba(0,0,0,.30);
+}
+
+#programModal_ocio #tab_ocio_datos #ocioGroupAvatar.ocio-avatar:hover::before{ opacity: 1; }
+#programModal_ocio #tab_ocio_datos #ocioGroupAvatar.ocio-avatar:hover::after{
+  opacity: 1;
+  transform: translate(-50%,-50%) scale(1);
+}
+#programModal_ocio #tab_ocio_datos #ocioGroupAvatar.ocio-avatar:hover img{ transform: scale(1.02); }
+
+#programModal_ocio #tab_ocio_datos #ocioGroupAvatar .ocio-avatar__fallback{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  font-size: 1.6rem;
+  letter-spacing: .4px;
+  color: var(--oc-text);
+}
+
+/* Responsable picker (avatar + select) */
+#programModal_ocio .ocio-resp-picker{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+#programModal_ocio .ocio-resp-picker #ocioRespAvatar.ocio-avatar{
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  overflow:hidden;
+  border: 1px solid var(--oc-border);
+  background: var(--oc-soft);
+}
+#programModal_ocio .ocio-resp-picker #ocioRespAvatar.ocio-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+
+/* Responsive datos */
+@media (max-width: 980px){
+  #programModal_ocio #tab_ocio_datos .io-section__body{
+    grid-template-columns: 1fr;
+  }
+  #programModal_ocio #tab_ocio_datos .io-section__body > .io-form-grid{
+    grid-column: 1;
+  }
+  #programModal_ocio #tab_ocio_datos #ocioGroupAvatar.ocio-avatar{
+    max-width: 520px;
+  }
+}
+
+
+/* =========================================================
+   5) OCIO > PARTICIPANTES (RESULTADOS + SELECCIONADOS)
+   - Target: #tab_ocio_participantes
+   ========================================================= */
+
+/* Bloques de usuarios */
+#programModal_ocio .ocio-users{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+@media (max-width: 980px){
+  #programModal_ocio .ocio-users{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px){
+  #programModal_ocio .ocio-users{ grid-template-columns: 1fr; }
+}
+
+/* Tile */
+#programModal_ocio .ocio-tile{
+  display:grid;
+  grid-template-columns: 56px minmax(0,1fr) auto;
+  gap: 12px;
+  align-items:center;
+
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--oc-border);
+  background: color-mix(in srgb, var(--bg-panel) 95%, #000 5%);
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+
+body.tema-claro #programModal_ocio .ocio-tile{
+  background:#fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* Avatar en tiles: NO sobresale */
+#programModal_ocio .ocio-tile__avatar .ocio-avatar{
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  overflow:hidden;
+  border: 1px solid var(--oc-border);
+  background: var(--oc-soft);
+  display:grid;
+  place-items:center;
+}
+#programModal_ocio .ocio-tile__avatar .ocio-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+#programModal_ocio .ocio-tile__avatar .ocio-avatar__fallback{
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:100%;
+  font-weight: 950;
+  color: var(--oc-text);
+}
+
+/* Meta */
+#programModal_ocio .ocio-tile__meta{ min-width:0; }
+#programModal_ocio .ocio-tile__name{
+  font-weight: 950;
+  color: var(--oc-text);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+#programModal_ocio .ocio-tile__dni{
+  margin-top: 2px;
+  font-size: .86rem;
+  color: var(--oc-muted);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Resultados: si no hay botón, que ocupe 2 columnas */
+#programModal_ocio .ocio-users--results .ocio-tile{
+  grid-template-columns: 56px minmax(0,1fr) auto;
+}
+
+/* Seleccionados: sin columna acciones (tu HTML no trae botón “Añadir”) */
+#programModal_ocio .ocio-users--selected .ocio-tile{
+  grid-template-columns: 56px minmax(0,1fr);
+}
+
+/* “Click en la foto para quitar” cabecera */
+#programModal_ocio .ocio-section-title{
+  margin-top: 12px;
+  margin-bottom: 10px;
+}
+#programModal_ocio .ocio-section-title__left{
+  display:flex;
+  align-items:flex-start;
+  gap: 10px;
+}
+#programModal_ocio .ocio-section-title__dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 65%, transparent);
+  opacity: .85;
+  margin-top: 4px;
+}
+#programModal_ocio .ocio-section-title__text{
+  font-weight: 950;
+  letter-spacing: .14px;
+  text-transform: uppercase;
+  font-size: .78rem;
+  color: color-mix(in srgb, var(--accent) 45%, var(--oc-muted) 55%);
+}
+#programModal_ocio .ocio-section-title__sub{
+  margin-top: 4px;
+  font-size: .86rem;
+  color: var(--oc-muted);
+}
+
+/* X de quitar: SOLO hover/focus, bien visible */
+#programModal_ocio .ocio-avatar.is-clickable{
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+#programModal_ocio .ocio-avatar__x{
+  position:absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display:grid;
+  place-items:center;
+
+  background: rgba(220,38,38,.92);
+  color: #fff;
+  font-weight: 950;
+  line-height: 1;
+  box-shadow: 0 10px 18px rgba(0,0,0,.22);
+  border: 1px solid rgba(255,255,255,.30);
+
+  opacity: 0;
+  transform: scale(.96);
+  transition: opacity .14s ease, transform .14s ease;
+  pointer-events:none;
+}
+
+/* Sutil oscurecido en hover */
+#programModal_ocio .ocio-avatar.is-clickable::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(2,6,23,.28);
+  opacity: 0;
+  transition: opacity .14s ease;
+  pointer-events:none;
+}
+
+#programModal_ocio .ocio-avatar.is-clickable:hover::before,
+#programModal_ocio .ocio-avatar.is-clickable:focus-visible::before{
+  opacity: 1;
+}
+#programModal_ocio .ocio-avatar.is-clickable:hover .ocio-avatar__x,
+#programModal_ocio .ocio-avatar.is-clickable:focus-visible .ocio-avatar__x{
+  opacity: 1;
+  transform: scale(1);
+}
+
+#programModal_ocio .ocio-avatar.is-clickable:focus-visible{
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+  border-radius: 14px;
+}
+
+
+/* =========================================================
+   6) OCIO > ACTA (ASISTENCIA + CHECK + INCIDENCIAS + HISTÓRICO)
+   ========================================================= */
+
+/* Grid asistencia */
+#programModal_ocio .ocio-as-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+@media (max-width: 980px){
+  #programModal_ocio .ocio-as-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 640px){
+  #programModal_ocio .ocio-as-grid{ grid-template-columns: 1fr; }
+}
+
+/* Tile asistencia */
+#programModal_ocio .ocio-as-tile{
+  display:grid;
+  grid-template-columns: 56px minmax(0,1fr);
+  gap: 12px;
+  align-items:center;
+
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--oc-border);
+  background: color-mix(in srgb, var(--bg-panel) 95%, #000 5%);
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+
+body.tema-claro #programModal_ocio .ocio-as-tile{
+  background:#fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* Avatar asistencia */
+#programModal_ocio .ocio-as-avatar{
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  overflow:hidden;
+  border: 1px solid var(--oc-border);
+  background: var(--oc-soft);
+  display:grid;
+  place-items:center;
+  position: relative;
+  cursor:pointer;
+  padding: 0;
+}
+
+#programModal_ocio .ocio-as-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+
+#programModal_ocio .ocio-as-fallback{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  color: var(--oc-text);
+}
+
+/* CHECK: visible y claro */
+#programModal_ocio .ocio-as-check{
+  position:absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display:grid;
+  place-items:center;
+
+  background: rgba(34,197,94,.95);
+  color: #fff;
+  font-weight: 950;
+  box-shadow: 0 10px 18px rgba(0,0,0,.22);
+  border: 1px solid rgba(255,255,255,.30);
+
+  opacity: 0;
+  transform: scale(.96);
+  transition: opacity .14s ease, transform .14s ease;
+  pointer-events:none;
+}
+
+/* Solo cuando está checked (y también en hover para “preview”) */
+#programModal_ocio .ocio-as-tile.is-checked .ocio-as-check{ opacity: 1; transform: scale(1); }
+
+#programModal_ocio .ocio-as-avatar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(2,6,23,.22);
+  opacity: 0;
+  transition: opacity .14s ease;
+  pointer-events:none;
+}
+#programModal_ocio .ocio-as-avatar:hover::before{ opacity: 1; }
+#programModal_ocio .ocio-as-avatar:hover .ocio-as-check{
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Meta asistencia */
+#programModal_ocio .ocio-as-meta{ min-width:0; }
+#programModal_ocio .ocio-as-name{
+  font-weight: 950;
+  color: var(--oc-text);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+#programModal_ocio .ocio-as-dni{
+  margin-top: 2px;
+  font-size: .86rem;
+  color: var(--oc-muted);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Acciones acta (botones debajo textarea) */
+#programModal_ocio .ocio-acta-actions{
+  display:flex;
+  gap: 10px;
+  justify-content:flex-end;
+  margin-top: 10px;
+}
+
+/* Lista incidencias */
+#programModal_ocio .ocio-inc-list{
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+
+#programModal_ocio .ocio-inc-item{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--oc-border) 80%, transparent);
+  background: color-mix(in srgb, var(--oc-soft) 70%, transparent);
+}
+
+#programModal_ocio .ocio-inc-text{
+  color: var(--oc-text);
+  font-size: .92rem;
+}
+
+/* Histórico */
+#programModal_ocio .ocio-list{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+
+#programModal_ocio .ocio-row{
+  display:flex;
+  justify-content:space-between;
+  gap: 12px;
+  align-items:center;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--oc-border) 80%, transparent);
+  background: color-mix(in srgb, var(--bg-panel) 95%, #000 5%);
+}
+
+body.tema-claro #programModal_ocio .ocio-row{
+  background:#fff;
+}
+
+#programModal_ocio .ocio-row__name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color: var(--oc-text);
+}
+
+/* Ajustes de botones “ghost/secondary” en este modal */
+#programModal_ocio .btn-secondary{
+  background: rgba(148,163,184,0.08);
+  border: 1px solid rgba(148,163,184,0.18);
+}
+#programModal_ocio .btn.btn-ghost{
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--oc-border) 70%, transparent);
+}
+
+/* =========================================================
+   7) PEQUEÑOS FIXES VISUALES (para tu caso exacto)
+   ========================================================= */
+
+/* Resultado buscado: que no “pise” el layout del input/botón */
+#programModal_ocio #p_resultados{
+  margin-top: 10px !important;
+}
+#programModal_ocio #p_resultados .ocio-users--results{
+  margin-top: 0;
+}
+
+/* Si un tile de resultados aparece “muy alto”, limitar texto */
+#programModal_ocio .ocio-users--results .ocio-tile__name,
+#programModal_ocio .ocio-users--results .ocio-tile__dni{
+  max-width: 100%;
+}
+
+/* Mejor hit-area del botón avatar (seleccionados) */
+#programModal_ocio .ocio-users--selected .ocio-avatar.is-clickable{
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+      padding: 0;
+}
+
+/* En tema claro: asegurar contraste de badges */
+body.tema-claro #programModal_ocio .ocio-avatar__x{
+  box-shadow: 0 8px 16px rgba(0,0,0,.18);
+}
+body.tema-claro #programModal_ocio .ocio-as-check{
+  box-shadow: 0 8px 16px rgba(0,0,0,.18);
+}
+/* Acciones de Acta: ocultas por defecto */
+#programModal_ocio .ocio-subtabs-actions,
+#programModal_vacaciones .vac-subtabs-actions{
+  display: none;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Se muestran cuando el modal tiene la clase is-acta */
+#programModal_ocio.is-acta .ocio-subtabs-actions{
+  display: flex;
+}
+#programModal_vacaciones.is-acta .vac-subtabs-actions{
+  display: flex;
+}

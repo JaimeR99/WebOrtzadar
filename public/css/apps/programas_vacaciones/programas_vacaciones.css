@@ -1,0 +1,1187 @@
+/* =========================================================
+   PROGRAMA: VACACIONES
+   CSS UNIFICADO (igual que OCIO)
+   - Página: header + filtros + lista CRM
+   - Modal (#programModal_vacaciones): top + tabs + subtabs (fila) + scroll
+   - Datos: grid 1/3 foto + 2/3 formulario (3 filas)
+   - Participantes: resultados + seleccionados (tile 3 columnas / 2 columnas)
+   - Acta: asistencia tipo Ocio (check visible) + incidencias + histórico
+   ========================================================= */
+
+
+/* =========================================================
+   1) PÁGINA VACACIONES: HEADER + FILTROS + LISTA
+   ========================================================= */
+
+.app.vacaciones{
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.app.vacaciones .app__header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  flex: 0 0 auto;
+}
+
+.app.vacaciones .app__title{
+  margin:0;
+  font-size: 1.35rem;
+  font-weight: 950;
+  letter-spacing: .2px;
+  color: var(--text-main);
+}
+
+.app.vacaciones .app__subtitle{
+  margin: 4px 0 0;
+  font-size: .92rem;
+  color: var(--text-soft);
+  opacity: .9;
+}
+
+/* Filtros */
+.app.vacaciones .panel.filters{
+  flex: 0 0 auto;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--bg-panel) 92%, #000 8%);
+  border: 1px solid rgba(148,163,184,0.14);
+  box-shadow: 0 6px 16px rgba(0,0,0,.22);
+}
+
+.app.vacaciones .filters__row{
+  display:grid;
+  grid-template-columns: 1.2fr .6fr 1fr 1fr auto;
+  gap: 12px;
+  align-items:end;
+}
+
+.app.vacaciones .filters__row .field{ min-width: 0; }
+
+.app.vacaciones .filters__row .field label{
+  font-size: .82rem;
+  color: var(--text-soft);
+}
+
+.app.vacaciones .filters__actions{
+  display:flex;
+  gap: 10px;
+  justify-content:flex-end;
+  align-items:center;
+  padding-bottom: 1px;
+}
+
+/* Lista: ocupa resto y scroll */
+.app.vacaciones #vacacionesList.list__grid{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-top: var(--space-3);
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+
+/* Card destino (fila CRM) */
+.app.vacaciones .vac-destino{
+  display:grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 14px;
+  align-items:center;
+
+  padding: 14px;
+  border-radius: 14px;
+
+  background: color-mix(in srgb, var(--bg-panel) 96%, #000 4%);
+  border: 1px solid rgba(148,163,184,0.14);
+  box-shadow: 0 4px 12px rgba(0,0,0,.22);
+
+  cursor: pointer;
+  position: relative;
+  transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease, background .12s ease;
+}
+
+/* barra lateral sutil */
+.app.vacaciones .vac-destino::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:10px;
+  bottom:10px;
+  width: 3px;
+  border-radius: 999px;
+  background: transparent;
+  opacity: .95;
+}
+
+.app.vacaciones .vac-destino:hover{
+  transform: translateY(-1px);
+  border-color: rgba(148,163,184,0.26);
+  box-shadow: 0 10px 24px rgba(0,0,0,.34);
+  background: color-mix(in srgb, var(--bg-panel) 98%, #fff 2%);
+}
+
+.app.vacaciones .vac-destino:hover::before{
+  background: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.app.vacaciones .vac-destino:focus-within{
+  box-shadow: var(--focus), 0 10px 24px rgba(0,0,0,.30);
+  border-color: color-mix(in srgb, var(--accent) 35%, rgba(148,163,184,0.22));
+}
+
+/* fila clicable => ocultamos botón abrir */
+.app.vacaciones .vac-destino__actions{ display:none !important; }
+
+/* Avatar destino (lista) */
+.app.vacaciones .vac-avatar{
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background: rgba(148,163,184,0.08);
+  border: 1px solid rgba(148,163,184,0.18);
+}
+
+.app.vacaciones .vac-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+
+.app.vacaciones .vac-avatar__fallback{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  color: var(--text-main);
+}
+
+/* Main */
+.app.vacaciones .vac-destino__main{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+
+.app.vacaciones .vac-destino__title{
+  font-weight: 950;
+  font-size: 1.05rem;
+  letter-spacing: .2px;
+  line-height: 1.15;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.app.vacaciones .vac-destino__meta{
+  display:flex;
+  gap: 14px;
+  flex-wrap:wrap;
+}
+
+.app.vacaciones .vac-destino__meta .io-muted{
+  font-size: .86rem;
+  color: color-mix(in srgb, var(--text-soft) 92%, #fff 8%);
+  opacity: .9;
+}
+
+/* Tema claro (lista) */
+body.tema-claro .app.vacaciones .panel.filters{
+  background: #fff;
+  border-color: rgba(15,23,42,.12);
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+body.tema-claro .app.vacaciones .vac-destino{
+  background:#fff;
+  border-color: rgba(15,23,42,.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+body.tema-claro .app.vacaciones .vac-destino:hover{
+  box-shadow: 0 4px 10px rgba(0,0,0,.12);
+}
+
+/* Responsive página */
+@media (max-width: 1100px){
+  .app.vacaciones .filters__row{ grid-template-columns: 1fr 1fr; }
+  .app.vacaciones .filters__actions{ grid-column: 1 / -1; justify-content:flex-end; }
+}
+@media (max-width: 640px){
+  .app.vacaciones .filters__row{ grid-template-columns: 1fr; }
+}
+
+
+/* =========================================================
+   2) MODAL VACACIONES — BASE (idéntico a OCIO)
+   [#programModal_vacaciones]
+   ========================================================= */
+
+#programModal_vacaciones{
+  --vac-pad: 12px;
+  --vac-gap: 12px;
+  --vac-radius: 14px;
+  --vac-input-h: 36px;
+  --vac-font: 13.5px;
+
+  --vac-border: rgba(15,23,42,.10);
+  --vac-soft: rgba(2,6,23,.03);
+  --vac-text: rgba(15,23,42,.92);
+  --vac-muted: rgba(51,65,85,.78);
+}
+
+body:not(.tema-claro) #programModal_vacaciones{
+  --vac-border: rgba(148,163,184,.16);
+  --vac-soft: rgba(148,163,184,.06);
+  --vac-text: rgba(248,250,252,.92);
+  --vac-muted: rgba(226,232,240,.76);
+  font-size: var(--vac-font);
+}
+
+/* Dialog */
+#programModal_vacaciones .io-modal__dialog{ overflow:hidden; }
+
+/* Top */
+#programModal_vacaciones .io-modal__top{
+  padding: 14px var(--vac-pad);
+  border-bottom: 1px solid color-mix(in srgb, var(--vac-border) 70%, transparent);
+}
+#programModal_vacaciones .io-modal__name{
+  font-weight: 950;
+  letter-spacing: .2px;
+  color: var(--vac-text);
+}
+#programModal_vacaciones .io-modal__sub{
+  color: var(--vac-muted);
+}
+
+/* Cerrar */
+#programModal_vacaciones .io-icon-btn{
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--vac-border) 85%, transparent);
+  background: rgba(148,163,184,0.06);
+  color: var(--vac-text);
+}
+
+/* Tabs principales */
+#programModal_vacaciones .io-modal__tabs{
+  padding: 0 var(--vac-pad);
+  gap: 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--vac-border) 70%, transparent);
+}
+
+#programModal_vacaciones .io-modal__tabs .io-tab{
+  position: relative;
+  padding: 10px 2px 11px;
+  font-weight: 850;
+  font-size: .88rem;
+  letter-spacing: .2px;
+  opacity: .88;
+  background: transparent;
+  border: 0;
+}
+
+#programModal_vacaciones .io-modal__tabs .io-tab:hover{ opacity: 1; }
+#programModal_vacaciones .io-modal__tabs .io-tab.is-active{ opacity: 1; color: var(--vac-text); }
+
+#programModal_vacaciones .io-modal__tabs .io-tab.is-active::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  bottom: -1px;
+  height: 3px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 75%, #fff 25%);
+}
+
+/* Subtabs bar (NO botones pill: fila con subrayado) */
+#programModal_vacaciones .vac-subtabsbar{
+  padding: 0;
+  background: linear-gradient(180deg, var(--vac-soft), transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--vac-border) 65%, transparent);
+}
+
+#programModal_vacaciones .vac-subtabsbar .io-subtabs{
+  padding: 8px var(--vac-pad);
+  margin: 0;
+  gap: 14px;
+}
+
+#programModal_vacaciones .vac-subtabsbar .io-tab{
+  position: relative;
+  padding: 8px 2px 9px;
+  font-size: .84rem;
+  font-weight: 800;
+  opacity: .82;
+  background: transparent;
+  border: 0;
+}
+#programModal_vacaciones .vac-subtabsbar .io-tab:hover{ opacity: .95; }
+#programModal_vacaciones .vac-subtabsbar .io-tab.is-active{ opacity: 1; }
+
+#programModal_vacaciones .vac-subtabsbar .io-tab.is-active::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 65%, transparent);
+}
+
+/* Acciones acta: sólo visible cuando el tab acta esté activo (pon clase .is-acta en .vac-subtabsbar desde JS) */
+#programModal_vacaciones .vac-subtabs-actions{
+  padding: 0 var(--vac-pad) 10px;
+  display:flex;
+  gap: 10px;
+  justify-content:flex-end;
+  align-items:center;
+}
+#programModal_vacaciones .vac-subtabsbar:not(.is-acta) .vac-subtabs-actions{ display:none; }
+
+/* Scroll */
+#programModal_vacaciones .io-modal__scroll{
+  padding: var(--vac-pad);
+}
+
+/* Footer compacto */
+#programModal_vacaciones .io-modal__footer .btn{
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  font-size: .88rem;
+}
+
+
+/* =========================================================
+   3) MODAL VACACIONES — SECCIONES / FORM BASE
+   ========================================================= */
+
+#programModal_vacaciones .io-section{
+  border-radius: var(--vac-radius);
+  border: 1px solid var(--vac-border);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 8px 22px rgba(15,23,42,.06);
+  overflow: hidden;
+}
+
+body:not(.tema-claro) #programModal_vacaciones .io-section{
+  background: color-mix(in srgb, var(--bg-panel) 92%, #000 8%);
+  box-shadow: 0 10px 26px rgba(0,0,0,.26);
+}
+
+#programModal_vacaciones .io-section__head{
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--vac-border) 70%, transparent);
+  background: linear-gradient(180deg, var(--vac-soft), transparent);
+}
+
+#programModal_vacaciones .io-section__body{ padding: 12px 14px 14px; }
+
+#programModal_vacaciones .io-section__title{
+  font-weight: 950;
+  letter-spacing: .2px;
+  color: var(--vac-text);
+}
+
+#programModal_vacaciones .io-section__sub{
+  font-size: .88rem;
+  color: var(--vac-muted);
+}
+
+#programModal_vacaciones .io-form-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 14px;
+}
+
+#programModal_vacaciones .io-row{
+  display:flex;
+  flex-direction:column;
+  gap: 4px;
+}
+
+#programModal_vacaciones .io-row--full{ grid-column: 1 / -1; }
+
+#programModal_vacaciones .io-label{
+  font-size: .78rem;
+  font-weight: 750;
+  letter-spacing: .12px;
+  color: var(--vac-muted);
+  opacity: 1;
+}
+
+#programModal_vacaciones :is(.io-input,.io-select,.io-textarea){
+  border-radius: 12px;
+  border: 1px solid var(--vac-border);
+  background: var(--vac-soft);
+  box-shadow: none;
+  color: var(--vac-text);
+}
+
+#programModal_vacaciones :is(.io-input,.io-select){
+  height: var(--vac-input-h);
+  font-size: .88rem;
+}
+
+#programModal_vacaciones .io-textarea,
+#programModal_vacaciones textarea.io-input{
+  min-height: 96px;
+  resize: vertical;
+  font-size: .88rem;
+}
+
+#programModal_vacaciones :is(.io-input,.io-select,.io-textarea):focus{
+  outline: none;
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--vac-border));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+/* Responsive base */
+@media (max-width: 980px){
+  #programModal_vacaciones .io-form-grid{ grid-template-columns: 1fr; }
+}
+
+
+/* =========================================================
+   4) VACACIONES > DATOS (vac-datos-grid) — 1/3 + 2/3, 3 filas
+   ========================================================= */
+
+#programModal_vacaciones #tab_vac_datos .io-section__body{
+  padding: 12px 14px 14px;
+}
+
+/* Grid 1/3 foto + 2/3 form */
+#programModal_vacaciones .vac-datos-grid{
+  display:grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
+  gap: 14px 18px;
+  align-items:start;
+}
+
+/* Col izquierda */
+#programModal_vacaciones .vac-photo-col{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+
+/* Foto destino (cuadrada, con hover) */
+#programModal_vacaciones .vac-photo{
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow:hidden;
+  border: 1px solid var(--vac-border);
+  background: var(--vac-soft);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  position: relative;
+}
+
+#programModal_vacaciones .vac-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  transform: scale(1);
+  transition: transform .14s ease;
+}
+
+#programModal_vacaciones .vac-photo__fallback{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  font-size: 1.6rem;
+  letter-spacing: .4px;
+  color: var(--vac-text);
+}
+
+/* overlay hover */
+#programModal_vacaciones .vac-photo::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(2,6,23,.22);
+  opacity: 0;
+  transition: opacity .14s ease;
+  pointer-events:none;
+}
+#programModal_vacaciones .vac-photo__overlay{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%) scale(.98);
+  opacity: 0;
+  transition: opacity .14s ease, transform .14s ease;
+  font-weight: 900;
+  font-size: .9rem;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(15,23,42,.88);
+  border: 1px solid rgba(255,255,255,.22);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(0,0,0,.30);
+  pointer-events:none;
+}
+
+#programModal_vacaciones .vac-photo:hover::before{ opacity: 1; }
+#programModal_vacaciones .vac-photo:hover .vac-photo__overlay{
+  opacity: 1;
+  transform: translate(-50%,-50%) scale(1);
+}
+#programModal_vacaciones .vac-photo:hover img{ transform: scale(1.02); }
+
+/* Col derecha: “3 filas” en stack */
+#programModal_vacaciones .vac-form-col{
+  min-width: 0;
+}
+#programModal_vacaciones .vac-form-stack{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+/* Responsable/Integrador (mini avatar + select) */
+#programModal_vacaciones .vac-person-control{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+#programModal_vacaciones .vac-mini-avatar{
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  overflow:hidden;
+  border: 1px solid var(--vac-border);
+  background: var(--vac-soft);
+  place-items:center;
+}
+#programModal_vacaciones .vac-mini-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+#programModal_vacaciones .vac-mini-avatar__fallback{
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:100%;
+  font-weight: 950;
+  color: var(--vac-text);
+}
+
+/* Responsive datos */
+@media (max-width: 980px){
+  #programModal_vacaciones .vac-datos-grid{
+    grid-template-columns: 1fr;
+  }
+  #programModal_vacaciones .vac-photo{
+    max-width: 520px;
+  }
+}
+
+
+/* =========================================================
+   5) VACACIONES > PARTICIPANTES (clavado a OCIO)
+   - Target: #tab_vac_participantes
+   ========================================================= */
+
+/* Separación resultados */
+#programModal_vacaciones #vacPartResultados{
+  margin-top: 10px !important;
+}
+
+/* Si el JS inyecta tiles “estilo ocio” dentro de Vacaciones, también los dejamos perfectos */
+#programModal_vacaciones .ocio-users{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+@media (max-width: 980px){
+  #programModal_vacaciones .ocio-users{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px){
+  #programModal_vacaciones .ocio-users{ grid-template-columns: 1fr; }
+}
+
+/* Variante VAC (si generas .vac-users/.vac-tile) */
+#programModal_vacaciones .vac-users{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+@media (max-width: 980px){
+  #programModal_vacaciones .vac-users{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px){
+  #programModal_vacaciones .vac-users{ grid-template-columns: 1fr; }
+}
+
+#programModal_vacaciones .vac-tile{
+  display:grid;
+  grid-template-columns: 56px minmax(0,1fr) auto;
+  gap: 12px;
+  align-items:center;
+
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--vac-border);
+  background: color-mix(in srgb, var(--bg-panel) 95%, #000 5%);
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+body.tema-claro #programModal_vacaciones .vac-tile{
+  background:#fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* Avatar en tiles: NO sobresale */
+#programModal_vacaciones .vac-tile__avatar{
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  overflow:hidden;
+  border: 1px solid var(--vac-border);
+  background: var(--vac-soft);
+  display:grid;
+  place-items:center;
+}
+#programModal_vacaciones .vac-tile__avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+#programModal_vacaciones .vac-tile__fallback{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  color: var(--vac-text);
+}
+
+/* Meta */
+#programModal_vacaciones .vac-tile__meta{ min-width:0; }
+#programModal_vacaciones .vac-tile__name{
+  font-weight: 950;
+  color: var(--vac-text);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+#programModal_vacaciones .vac-tile__dni{
+  margin-top: 2px;
+  font-size: .86rem;
+  color: var(--vac-muted);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Seleccionados: sin columna acciones */
+#programModal_vacaciones .vac-users--selected .vac-tile{
+  grid-template-columns: 56px minmax(0,1fr);
+}
+
+/* “Click en la foto para quitar” (si lo usas) */
+#programModal_vacaciones .vac-section-title{
+  margin-top: 12px;
+  margin-bottom: 10px;
+}
+#programModal_vacaciones .vac-section-title__left{
+  display:flex;
+  align-items:flex-start;
+  gap: 10px;
+}
+#programModal_vacaciones .vac-section-title__dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 65%, transparent);
+  opacity: .85;
+  margin-top: 4px;
+}
+#programModal_vacaciones .vac-section-title__text{
+  font-weight: 950;
+  letter-spacing: .14px;
+  text-transform: uppercase;
+  font-size: .78rem;
+  color: color-mix(in srgb, var(--accent) 45%, var(--vac-muted) 55%);
+}
+#programModal_vacaciones .vac-section-title__sub{
+  margin-top: 4px;
+  font-size: .86rem;
+  color: var(--vac-muted);
+}
+
+/* X de quitar: SOLO hover/focus (igual que ocio) */
+#programModal_vacaciones .vac-avatar.is-clickable{
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+#programModal_vacaciones .vac-avatar__x{
+  position:absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display:grid;
+  place-items:center;
+
+  background: rgba(220,38,38,.92);
+  color: #fff;
+  font-weight: 950;
+  line-height: 1;
+  box-shadow: 0 10px 18px rgba(0,0,0,.22);
+  border: 1px solid rgba(255,255,255,.30);
+
+  opacity: 0;
+  transform: scale(.96);
+  transition: opacity .14s ease, transform .14s ease;
+  pointer-events:none;
+}
+
+/* Sutil oscurecido en hover */
+#programModal_vacaciones .vac-avatar.is-clickable::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(2,6,23,.28);
+  opacity: 0;
+  transition: opacity .14s ease;
+  pointer-events:none;
+}
+#programModal_vacaciones .vac-avatar.is-clickable:hover::before,
+#programModal_vacaciones .vac-avatar.is-clickable:focus-visible::before{
+  opacity: 1;
+}
+#programModal_vacaciones .vac-avatar.is-clickable:hover .vac-avatar__x,
+#programModal_vacaciones .vac-avatar.is-clickable:focus-visible .vac-avatar__x{
+  opacity: 1;
+  transform: scale(1);
+}
+#programModal_vacaciones .vac-avatar.is-clickable:focus-visible{
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+  border-radius: 14px;
+}
+
+
+/* =========================================================
+   6) VACACIONES > ACTA (ASISTENCIA + CHECK + INCIDENCIAS + HISTÓRICO)
+   ========================================================= */
+
+/* Si tu asistencia inyecta el bloque de Ocio (.ocio-as-grid/.ocio-as-tile), lo dejamos perfecto en Vacaciones */
+#programModal_vacaciones #tab_vac_acta .ocio-as-grid{ margin-top: 8px; }
+
+/* Fallback: si decides generar clases vac-as-* */
+#programModal_vacaciones .vac-as-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+@media (max-width: 980px){
+  #programModal_vacaciones .vac-as-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 640px){
+  #programModal_vacaciones .vac-as-grid{ grid-template-columns: 1fr; }
+}
+
+#programModal_vacaciones .vac-as-tile{
+  display:grid;
+  grid-template-columns: 56px minmax(0,1fr);
+  gap: 12px;
+  align-items:center;
+
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--vac-border);
+  background: color-mix(in srgb, var(--bg-panel) 95%, #000 5%);
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+body.tema-claro #programModal_vacaciones .vac-as-tile{
+  background:#fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+#programModal_vacaciones .vac-as-avatar{
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  overflow:hidden;
+  border: 1px solid var(--vac-border);
+  background: var(--vac-soft);
+  display:grid;
+  place-items:center;
+  position: relative;
+  cursor:pointer;
+  padding: 0;
+}
+
+#programModal_vacaciones .vac-as-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+
+#programModal_vacaciones .vac-as-fallback{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  color: var(--vac-text);
+}
+
+/* CHECK: visible y claro */
+#programModal_vacaciones .vac-as-check{
+  position:absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display:grid;
+  place-items:center;
+
+  background: rgba(34,197,94,.95);
+  color: #fff;
+  font-weight: 950;
+  box-shadow: 0 10px 18px rgba(0,0,0,.22);
+  border: 1px solid rgba(255,255,255,.30);
+
+  opacity: 0;
+  transform: scale(.96);
+  transition: opacity .14s ease, transform .14s ease;
+  pointer-events:none;
+}
+#programModal_vacaciones .vac-as-tile.is-checked .vac-as-check{ opacity: 1; transform: scale(1); }
+
+#programModal_vacaciones .vac-as-avatar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(2,6,23,.22);
+  opacity: 0;
+  transition: opacity .14s ease;
+  pointer-events:none;
+}
+#programModal_vacaciones .vac-as-avatar:hover::before{ opacity: 1; }
+#programModal_vacaciones .vac-as-avatar:hover .vac-as-check{
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Botones debajo textarea */
+#programModal_vacaciones .vac-acta-actions{
+  display:flex;
+  gap: 10px;
+  justify-content:flex-end;
+  margin-top: 10px;
+}
+
+/* Incidencias (si renderizas lista) */
+#programModal_vacaciones .vac-inc-list{
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+#programModal_vacaciones .vac-inc-item{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--vac-border) 80%, transparent);
+  background: color-mix(in srgb, var(--vac-soft) 70%, transparent);
+}
+#programModal_vacaciones .vac-inc-text{
+  color: var(--vac-text);
+  font-size: .92rem;
+}
+
+/* Histórico (si renderizas filas) */
+#programModal_vacaciones .vac-list{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+#programModal_vacaciones .vac-row{
+  display:flex;
+  justify-content:space-between;
+  gap: 12px;
+  align-items:center;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--vac-border) 80%, transparent);
+  background: color-mix(in srgb, var(--bg-panel) 95%, #000 5%);
+}
+body.tema-claro #programModal_vacaciones .vac-row{ background:#fff; }
+
+#programModal_vacaciones .vac-row__name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color: var(--vac-text);
+}
+
+/* Ajustes de botones “secondary/ghost” dentro del modal */
+#programModal_vacaciones .btn-secondary{
+  background: rgba(148,163,184,0.08);
+  border: 1px solid rgba(148,163,184,0.18);
+}
+#programModal_vacaciones .btn.btn-ghost{
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--vac-border) 70%, transparent);
+}
+/* =========================================================
+   VACACIONES > PARTICIPANTES — X sobre avatar (igual que OCIO)
+   JS: button.vac-uavatar.is-clickable + span.vac-uavatar__x
+   ========================================================= */
+
+#programModal_vacaciones .vac-tile__avatar{
+  overflow: hidden; /* asegura que no “sobresalga” la foto */
+}
+
+/* botón avatar (CLICK remove) */
+#programModal_vacaciones .vac-uavatar{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: inherit;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* imagen encuadrada */
+#programModal_vacaciones .vac-uavatar img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* fallback (iniciales) */
+#programModal_vacaciones .vac-uavatar__fallback{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-weight: 950;
+  letter-spacing: .2px;
+  color: var(--io-text);
+}
+
+/* overlay sutil (como ocio) */
+#programModal_vacaciones .vac-uavatar.is-clickable::before{
+  content:"";
+  position: absolute;
+  inset: 0;
+  background: rgba(2,6,23,.38);
+  opacity: 0;
+  transition: opacity .14s ease;
+  pointer-events: none;
+}
+
+/* X roja (igual que ocio) */
+#programModal_vacaciones .vac-uavatar__x{
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+
+  font-weight: 950;
+  font-size: 14px;
+  line-height: 1;
+  color: #fff;
+
+  background: #ef4444;
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow: 0 10px 22px rgba(0,0,0,.30);
+
+  opacity: 0;
+  transform: scale(.92);
+  transition: opacity .14s ease, transform .14s ease;
+  pointer-events: none;
+}
+
+#programModal_vacaciones .vac-uavatar.is-clickable:hover::before{ opacity: 1; }
+#programModal_vacaciones .vac-uavatar.is-clickable:hover .vac-uavatar__x{
+  opacity: 1;
+  transform: scale(1);
+}
+
+#programModal_vacaciones .vac-uavatar.is-clickable:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* =========================================================
+   VACACIONES > ACTA — CHECK más legible (si aplica)
+   JS: .vac-as-tile.is-checked .vac-as-check
+   ========================================================= */
+
+#programModal_vacaciones .vac-as-check{
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(255,255,255,.24);
+  box-shadow: 0 10px 22px rgba(0,0,0,.30);
+  font-weight: 950;
+  font-size: 14px;
+}
+/* Acciones de Acta: ocultas por defecto */
+#programModal_ocio .ocio-subtabs-actions,
+#programModal_vacaciones .vac-subtabs-actions{
+  display: none;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Se muestran cuando el modal tiene la clase is-acta */
+#programModal_ocio.is-acta .ocio-subtabs-actions{
+  display: flex;
+}
+#programModal_vacaciones.is-acta .vac-subtabs-actions{
+  display: flex;
+}
+/* =========================================================
+   VACACIONES > ACTA: INCIDENCIAS + HISTÓRICO (estilo OCIO)
+   ========================================================= */
+
+/* Lista incidencias */
+#programModal_vacaciones .vac-inc-list{
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+
+
+#programModal_vacaciones .vac-inc-text{
+  color: var(--oc-text);
+  font-size: .92rem;
+  min-width: 0;
+}
+
+#programModal_vacaciones .vac-inc-del{
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--oc-border) 75%, transparent);
+  background: transparent;
+  color: var(--oc-text);
+  cursor:pointer;
+  line-height: 1;
+  font-size: 18px;
+}
+
+#programModal_vacaciones .vac-inc-del:hover{
+  background: color-mix(in srgb, var(--oc-soft) 90%, transparent);
+}
+
+/* Pill "pendiente" */
+#programModal_vacaciones .vac-pill{
+  display:inline-flex;
+  align-items:center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: .76rem;
+  font-weight: 850;
+  border: 1px solid color-mix(in srgb, var(--oc-border) 75%, transparent);
+}
+
+#programModal_vacaciones .vac-pill--pending{
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: color-mix(in srgb, var(--accent) 65%, var(--oc-text) 35%);
+}
+
+/* Histórico */
+#programModal_vacaciones .vac-list{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+
+
+body.tema-claro #programModal_vacaciones .vac-row{
+  background:#fff;
+}
+
+#programModal_vacaciones .vac-row__name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color: var(--oc-text);
+}
+/* Pill pendiente + botón X (clavado a Ocio, pero con vars VAC) */
+#programModal_vacaciones .vac-pill{
+  display:inline-flex;
+  align-items:center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: .76rem;
+  font-weight: 850;
+  border: 1px solid color-mix(in srgb, var(--vac-border) 75%, transparent);
+}
+
+#programModal_vacaciones .vac-pill--pending{
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: color-mix(in srgb, var(--accent) 65%, var(--vac-text) 35%);
+}
+
+#programModal_vacaciones .vac-inc-item{
+  display:flex;
+  justify-content:space-between;
+  gap: 10px;
+  align-items:flex-start;
+}
+
+#programModal_vacaciones .vac-inc-del{
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--vac-border) 75%, transparent);
+  background: transparent;
+  color: var(--vac-text);
+  cursor:pointer;
+  line-height: 1;
+  font-size: 18px;
+}
+
+#programModal_vacaciones .vac-inc-del:hover{
+  background: color-mix(in srgb, var(--vac-soft) 90%, transparent);
+}

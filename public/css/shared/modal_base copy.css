@@ -1,0 +1,474 @@
+/* =========================================================
+   COMPONENT: MODAL BASE (reutilizable)
+   - Modal profesional: top + tabs + content + footer
+   - Tabs ARIA (main + subtabs)
+   - Secciones, form-grid, inputs premium
+   - Diagnósticos (cards + switch)
+   ========================================================= */
+
+/* =========================================================
+   IO MODAL — Profesional (subtabs arriba + scroll debajo)
+   ========================================================= */
+.io-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index: 999;
+}
+.io-modal.is-open{ display:block; }
+
+.io-modal__overlay{
+  position:absolute;
+  inset:0;
+  background: rgba(2, 6, 23, .62);
+  backdrop-filter: blur(6px);
+}
+
+/* Dialog = top + tabs + content + footer */
+.io-modal__dialog{
+  position: relative;
+  width: min(1160px, calc(100% - 24px));
+  margin: 18px auto;
+  border-radius: 18px;
+  overflow: hidden;
+
+  background: var(--bg-panel);
+  border: 1px solid rgba(148,163,184,0.16);
+  box-shadow: 0 18px 60px rgba(0,0,0,.65);
+
+  display:flex;
+  flex-direction: column;
+  max-height: calc(100vh - 36px);
+  min-height: 0;
+}
+
+/* ---------- TOP ---------- */
+.io-modal__top{
+  flex: 0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+  padding: 14px 16px;
+
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--bg-panel) 85%, #000 15%),
+    var(--bg-panel)
+  );
+  border-bottom: 1px solid rgba(148,163,184,0.14);
+}
+
+.io-modal__top-left{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  min-width:0;
+}
+
+.io-modal__top-titles{ min-width:0; }
+
+.io-modal__name{
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: var(--text-main);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.io-modal__sub{
+  margin-top: 2px;
+  font-size: .86rem;
+  color: var(--text-soft);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* Avatar cabecera (dentro del modal) */
+.io-modal .io-avatar{
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 900;
+  font-size: .95rem;
+  color: #fff;
+  background: color-mix(in srgb, var(--accent) 18%, var(--bg-panel-soft) 82%);
+  border: 1px solid rgba(148,163,184,0.18);
+}
+
+/* Botón cerrar */
+.io-icon-btn{
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(148,163,184,0.18);
+  background: rgba(148,163,184,0.08);
+  color: var(--text-main);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 22px;
+  line-height: 1;
+  cursor:pointer;
+  transition: background .12s ease, border-color .12s ease, transform .12s ease;
+}
+.io-icon-btn:hover{
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  transform: translateY(-1px);
+}
+.io-icon-btn:focus-visible{
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+/* ---------- Tabs principales ---------- */
+.io-modal__tabs{
+  flex: 0 0 auto;
+  display:flex;
+  gap: 16px;
+  padding: 0 16px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid rgba(148,163,184,0.14);
+}
+
+/* Tabs (reutilizado para main y subtabs) */
+.io-tab{
+  background: transparent;
+  border: 0;
+  padding: 12px 2px;
+  font-weight: 800;
+  font-size: .9rem;
+  color: color-mix(in srgb, var(--text-soft) 90%, #fff 10%);
+  cursor:pointer;
+  position: relative;
+}
+.io-tab:hover{ color: var(--text-main); }
+.io-tab:focus-visible{ outline: none; box-shadow: var(--focus); border-radius: 10px; }
+
+.io-tab.is-active{ color: var(--text-main); }
+.io-tab.is-active::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-1px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+/* ---------- Content (estructura para scroll interno) ---------- */
+.io-modal__content{
+  flex: 1 1 auto;
+  min-height:0;
+  overflow: hidden;
+  background: var(--bg-panel);
+  padding: 0px 16px 0;
+
+  display:flex;
+  flex-direction:column;
+}
+
+/* MAIN panes: ocultos por defecto; el activo es flex-col */
+.io-pane[data-tab-scope="main"]{
+  display:none;
+  flex-direction:column;
+  min-height:0;
+}
+.io-pane[data-tab-scope="main"].is-active{
+  display:flex;
+  flex-direction:column;
+  flex: 1 1 auto;
+  min-height:0;
+}
+
+/* subtabs (fijos arriba) */
+.io-subtabs{
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 3;
+  display:flex;
+  gap: 16px;
+
+  padding: 8px 0 10px;
+  margin: 0 0 12px;
+
+  background: var(--bg-panel);
+  border-bottom: 1px solid rgba(148,163,184,0.12);
+}
+
+/* Scroll real (por debajo de subtabs) */
+.io-modal__scroll{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  /* aire para que el footer no tape el último campo */
+  padding-bottom: 88px;
+}
+
+/* Panes */
+.io-pane{ display:none; }
+.io-pane.is-active{ display:block; }
+
+/* ---------- Footer ---------- */
+.io-modal__footer{
+  flex: 0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(148,163,184,0.14);
+  background: var(--bg-panel);
+}
+
+.io-status{
+  font-size: .82rem;
+  color: var(--text-soft);
+  min-width: 0;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.io-modal__footer-actions{
+  display:flex;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+/* =========================================================
+   SECCIONES (reutilizable)
+   ========================================================= */
+.io-sections{
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+  min-height: 0;
+}
+
+.io-section{
+  border-radius: 16px;
+  border: 1px solid rgba(148,163,184,0.14);
+  background: rgba(148,163,184,0.05);
+  padding: 16px;
+}
+
+.io-section__head{
+  display:flex;
+  flex-direction:column;
+  gap: 4px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(148,163,184,0.12);
+}
+
+.io-section__title{
+  font-weight: 950;
+  font-size: .98rem;
+  color: var(--text-main);
+  letter-spacing: .2px;
+}
+
+.io-section__sub{
+  font-size: .84rem;
+  color: var(--text-soft);
+}
+
+.io-section__body{ padding-top: 2px; }
+
+/* =========================================================
+   FORM GRID (labels + inputs)
+   ========================================================= */
+.io-form-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 14px;
+  align-items:start;
+}
+
+.io-row{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+  min-width:0;
+}
+
+.io-row--full{ grid-column: 1 / -1; }
+.io-row--textarea{ grid-column: 1 / -1; }
+
+.io-label{
+  font-size: .80rem;
+  color: var(--text-soft);
+  line-height: 1.2;
+}
+
+.io-value{ min-width:0; }
+
+/* Inputs premium */
+.io-modal :is(.io-input, .io-textarea),
+.io-profile :is(.io-input, .io-textarea){
+  width: 100%;
+  min-width: 0;
+
+  border-radius: 12px;
+  border: 1px solid rgba(148,163,184,0.16);
+  background: color-mix(in srgb, var(--bg-panel) 70%, #000 30%);
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+}
+
+.io-modal :is(.io-input, .io-textarea):focus,
+.io-profile :is(.io-input, .io-textarea):focus{
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: var(--focus);
+  outline: none;
+}
+
+/* =========================================================
+   DIAGNÓSTICOS (cards + switch)
+   ========================================================= */
+.diag-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.diag-card{
+  border-radius: 16px;
+  border: 1px solid rgba(148,163,184,0.14);
+  background: rgba(148,163,184,0.05);
+  overflow: hidden;
+}
+
+.diag-card__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+  padding: 14px 14px 12px;
+  border-bottom: 1px solid rgba(148,163,184,0.10);
+}
+
+.diag-title{
+  font-weight: 950;
+  color: var(--text-main);
+  font-size: .95rem;
+  line-height: 1.15;
+}
+
+.diag-sub{
+  margin-top: 3px;
+  font-size: .82rem;
+  color: var(--text-soft);
+}
+
+.diag-card__body{
+  padding: 12px 14px 14px;
+}
+
+.diag-form{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 12px;
+}
+
+.diag-form .field{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.diag-form .field label{
+  font-size: .78rem;
+  color: var(--text-soft);
+}
+
+.diag-form .field--full{ grid-column: 1 / -1; }
+
+.diag-card.is-off .diag-card__body{ display:none; }
+
+/* Switch */
+.switch{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  user-select:none;
+}
+.switch input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.switch__ui{
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.18);
+  background: rgba(148,163,184,0.10);
+  position: relative;
+  transition: background .12s ease, border-color .12s ease;
+  flex: 0 0 auto;
+}
+.switch__ui::after{
+  content:"";
+  position:absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 10px 24px rgba(0,0,0,.30);
+  transition: transform .14s ease;
+}
+.switch__text{
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--text-main);
+  opacity: .95;
+}
+.switch input:checked + .switch__ui{
+  background: color-mix(in srgb, var(--accent) 45%, rgba(148,163,184,0.10));
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+.switch input:checked + .switch__ui::after{
+  transform: translateX(20px);
+}
+
+/* Helper subtitle dentro de grids */
+.io-subtitle{
+  grid-column: 1 / -1;
+  margin-top: var(--space-3);
+  padding-top: var(--space-2);
+  font-weight: 800;
+  opacity: .9;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 980px){
+  .io-modal__dialog{
+    margin: 14px auto;
+    max-height: calc(100vh - 28px);
+  }
+
+  .io-form-grid{ grid-template-columns: 1fr; }
+  .diag-grid{ grid-template-columns: 1fr; }
+  .diag-form{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px){
+  .io-modal__footer{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .io-modal__footer-actions{ justify-content: flex-end; }
+}

@@ -1,0 +1,101 @@
+/* public/css/apps/dashboard/dashboard.css
+   Dashboard (KPIs + gráficas) – solo estilos específicos.
+   Base visual de paneles viene de: shared/theme.css + shared/components.css
+*/
+
+.ayudas-dashboard{
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  min-width: 0;
+}
+
+/* =====================
+   KPI GRID
+   ===================== */
+.kpi-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.kpi-card{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-2);
+  padding: 22px var(--space-4);
+}
+
+.kpi-title{
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.kpi-value{
+  font-size: 2.1rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--accent-2);
+}
+
+/* =====================
+   CHART GRID
+   ===================== */
+.charts-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.chart-card{
+  padding: var(--space-4);
+  gap: var(--space-3);
+}
+
+.chart-title{
+  font-size: 1.25rem;
+  font-weight: 750;
+  color: var(--text-main);
+}
+
+.chart-wrap{
+  position: relative;
+  min-height: 260px;
+  width: 100%;
+  min-width: 0;
+}
+
+.charts-grid canvas{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Evitar desbordes en grids */
+.ayudas-dashboard,
+.ayudas-dashboard *{
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* =====================
+   RESPONSIVE
+   ===================== */
+@media (max-width: 1200px){
+  .charts-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px){
+  .kpi-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px){
+  .kpi-grid{ grid-template-columns: 1fr; }
+  .charts-grid{ grid-template-columns: 1fr; }
+  .chart-wrap{ min-height: 240px; }
+}

@@ -1,0 +1,113 @@
+/* =========================================================
+   THEME / TOKENS GLOBALES
+   ========================================================= */
+
+:root {
+  /* ---------- Tipografía ---------- */
+  --font-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-base: 13px;
+
+  /* ---------- Spacing ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* ---------- Border radius ---------- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* ---------- Borders ---------- */
+  --border-1: 1px solid rgba(255, 255, 255, 0.08);
+  --border-2: 1px solid rgba(255, 255, 255, 0.12);
+
+  /* ---------- Shadows ---------- */
+  --shadow-1: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 6px 18px rgba(0, 0, 0, 0.45);
+
+  /* ---------- Colors (dark default) ---------- */
+  --bg-main: #0e1116;
+  --bg-panel: #1c1e21;
+  --bg-menus: #151516;
+  --bg-panel-soft: #1b2230;
+
+  --text-main: #e6edf3;
+  --text-soft: #9aa4b2;
+
+  --danger: #ef4444;
+  --success: #22c55e;
+
+  /* ---------- UI semantics ---------- */
+  --separator: rgba(148, 163, 184, 0.22);
+  --row-alt: rgba(255, 255, 255, 0.03);
+  /* Acento principal */
+  --accent: #f97316;
+  --accent-2: #fb923c;
+  --accent-soft: color-mix(in srgb, var(--accent) 15%, transparent);
+
+  /* Focus SIEMPRE basado en accent */
+  --focus: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+  --focus-ring: var(--focus);
+
+  /* Hover nav */
+  --nav-hover-bg: color-mix(in srgb, var(--accent) 14%, transparent);
+
+  /* Compat */
+  --bg-app: var(--bg-main);
+  --shadow-3: 0 18px 46px rgba(0, 0, 0, 0.55);
+
+  /* Superficies */
+  --surface-0: var(--bg-main);
+  --surface-1: var(--bg-panel);
+  --surface-2: var(--bg-panel-soft);
+
+  /* Inputs */
+  --input-bg: color-mix(in srgb, var(--bg-panel) 70%, #000 30%);
+  --input-bg-2: color-mix(in srgb, var(--bg-panel-soft) 70%, #000 30%);
+
+  /* Panel “técnico” (si quieres mantener esa estética, pero controlable desde theme) */
+  --tech-header-bg: radial-gradient(circle at top left,
+      color-mix(in srgb, var(--bg-panel-soft) 80%, #000 20%),
+      color-mix(in srgb, var(--bg-panel) 75%, #000 25%));
+  --tech-panel-bg: radial-gradient(circle at top left,
+      color-mix(in srgb, var(--bg-panel-soft) 70%, #000 30%),
+      color-mix(in srgb, var(--bg-panel) 70%, #000 30%));
+  --tech-canvas-bg: radial-gradient(circle at center,
+      color-mix(in srgb, var(--bg-main) 70%, #000 30%),
+      #000);
+}
+
+/* =========================================================
+   TEMA CLARO
+   ========================================================= */
+
+body.tema-claro {
+  --bg-main: #f4f6fa;
+  --bg-panel: #ffffff;
+  --bg-panel-soft: #eef1f7;
+
+  --text-main: #0f172a;
+  --text-soft: #475569;
+
+  --border-1: 1px solid rgba(0, 0, 0, 0.08);
+  --border-2: 1px solid rgba(0, 0, 0, 0.12);
+
+  --shadow-1: 0 2px 6px rgba(0, 0, 0, 0.12);
+  --shadow-2: 0 6px 18px rgba(0, 0, 0, 0.18);
+  --bg-menus: #f4f4f4;
+  --separator: rgba(15, 23, 42, 0.12);
+  --row-alt: rgba(2, 6, 23, 0.03);
+  --focus: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+  --nav-hover-bg: color-mix(in srgb, var(--accent) 10%, transparent);
+
+  --input-bg: color-mix(in srgb, var(--bg-panel) 92%, #000 8%);
+  --input-bg-2: color-mix(in srgb, var(--bg-panel-soft) 92%, #000 8%);
+
+  --tech-header-bg: linear-gradient(90deg, #ffffff, #f3f4f6);
+  --tech-panel-bg: #ffffff;
+  --tech-canvas-bg: color-mix(in srgb, #0f172a 92%, #000 8%);
+}
